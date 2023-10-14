@@ -13,6 +13,8 @@
 #                                           Bibliotecas                                            #
 #--------------------------------------------------------------------------------------------------#
 
+# Teste
+
 import sqlite3
 
 from flask                   import Flask, render_template, request, redirect
@@ -30,7 +32,7 @@ from datetime                import date
 #--------------------------------------------------------------------------------------------------#
 
 def calcula_segunda_feira():
-     
+
     hoje = date.today()
 
     if   hoje.weekday() == 0:   # segunda-feira - retorna
@@ -43,7 +45,7 @@ def calcula_segunda_feira():
 #--------------------------------------------------------------------------------------------------#
 
 def soma_dia_data(data, dias):
-     
+
     data_date = datetime.strptime(str(data), "%Y-%m-%d")
     data_soma = data_date + timedelta(days = dias)
 
@@ -54,7 +56,7 @@ def soma_dia_data(data, dias):
 #--------------------------------------------------------------------------------------------------#
 
 def dia_semana(data):
-     
+
     if   data.weekday() == 0:
          return 'segunda-feira'
     elif data.weekday() == 1:
@@ -140,7 +142,7 @@ def pagina_paciente():
         elif 'BotaoVoltar'          in botoes:
               return redirect("/")
 
-    return render_template("Paciente.html", 
+    return render_template("Paciente.html",
                            pacientes        = monta_lista_dicio_pacientes        (consulta_paciente),
                            filtro_pacientes = monta_lista_dicio_filtro_pacientes (consulta_paciente))
 
@@ -183,7 +185,7 @@ def pagina_item():
         elif 'BotaoVoltar'          in botoes:
               return redirect("/")
 
-    return render_template("Item.html", 
+    return render_template("Item.html",
                            itens        = monta_lista_dicio_itens        (consulta_item),
                            filtro_itens = monta_lista_dicio_filtro_itens (consulta_item))
 
@@ -208,7 +210,7 @@ def pagina_consultas():
         botoes          = MultiDict(request.form)
 
         if   'BotaoPesquisar'       in botoes:
-              return render_template("Consultas.html", 
+              return render_template("Consultas.html",
                                      consultas        = monta_lista_dicio_consultas        (filtro_paciente),
                                      filtro_pacientes = monta_lista_dicio_filtro_pacientes (filtro_paciente))
         elif 'BotaoIncluir'         in botoes:
@@ -225,7 +227,7 @@ def pagina_consultas():
         elif 'BotaoVoltar'          in botoes:
               return redirect("/pacientes?filtro_paciente=" + filtro_paciente)
 
-    return render_template("Consultas.html", 
+    return render_template("Consultas.html",
                            consultas        = monta_lista_dicio_consultas        (consulta_paciente),
                            filtro_pacientes = monta_lista_dicio_filtro_pacientes (consulta_paciente))
 
@@ -242,7 +244,7 @@ def plano_diario():
     '''
 
     consulta_paciente = request.args.get("filtro_paciente")
-    
+
     if  request.method      == "POST":
         formulario          = request.form.to_dict()
         filtro_paciente     = formulario['FiltroPaciente']
@@ -251,7 +253,7 @@ def plano_diario():
         filtro_dia          = formulario['FiltroDia']
         botoes              = MultiDict(request.form)
 
-        if   'BotaoPesquisar' in botoes: 
+        if   'BotaoPesquisar' in botoes:
 
               data_inicial_string_Ymd = filtro_data_inicial
               data_final_string_Ymd   = filtro_data_final
@@ -259,7 +261,7 @@ def plano_diario():
               data_dia_date_Ymd       = datetime.strptime(data_dia_string_dmY,"%d/%m/%Y")
               data_dia_string_Ymd     = data_dia_date_Ymd.strftime("%Y-%m-%d")
 
-              return render_template("PlanoDiario.html", 
+              return render_template("PlanoDiario.html",
                                      planos_diarios      = monta_lista_dicio_plano_diario (filtro_paciente, data_dia_string_Ymd),
                                      filtro_pacientes    = monta_lista_dicio_filtro_pacientes (filtro_paciente),
                                      filtro_data_inicial = data_inicial_string_Ymd,
@@ -268,7 +270,7 @@ def plano_diario():
                                      opcoes              = [{'opcao_id': 1, 'opcao': 1},{'opcao_id': 2, 'opcao': 2},{'opcao_id': 3, 'opcao': 3}],
                                      refeicoes           = monta_lista_dicio_filtro_refeicoes ('0'),
                                      itens               = monta_lista_dicio_filtro_itens ('0'),
-                                     unidades            = monta_lista_dicio_filtro_unidades ('0'))        
+                                     unidades            = monta_lista_dicio_filtro_unidades ('0'))
         elif 'BotaoIncluir'       in botoes:
               print("carregar tela incluir")
               print("chamar rotina que monta tela")
@@ -288,13 +290,13 @@ def plano_diario():
               print("chamar rotina que cria o arquivo Excel com o filtro aplicado na tela")
         elif 'BotaoVoltar'        in botoes:
               return redirect("/pacientes?filtro_paciente=" + filtro_paciente)
-    
+
     data_inicial_date_Ymd   = calcula_segunda_feira()
     data_inicial_string_Ymd = data_inicial_date_Ymd.strftime("%Y-%m-%d")
     data_final_string_Ymd   = soma_dia_data(data_inicial_date_Ymd, 6).strftime("%Y-%m-%d")
     filtro_dia              = data_inicial_string_Ymd
 
-    return render_template("PlanoDiario.html", 
+    return render_template("PlanoDiario.html",
                            planos_diarios      = monta_lista_dicio_plano_diario (consulta_paciente, filtro_dia),
                            filtro_pacientes    = monta_lista_dicio_filtro_pacientes (consulta_paciente),
                            filtro_data_inicial = data_inicial_string_Ymd,
@@ -400,17 +402,17 @@ def monta_lista_dicio_filtro_dia(data_inicial_string_Ymd, data_final_string_Ymd,
         data_inicial_date_Ymd   = datetime.strptime(data_inicial_string_Ymd,"%Y-%m-%d")
         data_inicial_string_dmY = data_inicial_date_Ymd.strftime("%d/%m/%Y")
         data_inicial_string_Ymd = data_inicial_date_Ymd.strftime("%Y-%m-%d")
-        
+
     filtro_dias = []
 
     if data_dia_string_Ymd == data_inicial_string_Ymd or data_dia_string_Ymd == "":
        selected = True
     else:
        selected = False
-         
+
     dict_dias = {"dia":      data_inicial_string_dmY + " (" + dia_semana(data_inicial_date_Ymd) + ")",
                  "selected": selected}
-    
+
     filtro_dias.append(dict_dias)
 
     data_inicial_date_Ymd = datetime.strptime(data_inicial_string_Ymd, "%Y-%m-%d")
@@ -425,11 +427,11 @@ def monta_lista_dicio_filtro_dia(data_inicial_string_Ymd, data_final_string_Ymd,
            selected = True
         else:
            selected = False
-            
-        dict_dias   = {"dia":      datetime.strftime(data_somada_date_Ymd, "%d/%m/%Y") + " (" + 
+
+        dict_dias   = {"dia":      datetime.strftime(data_somada_date_Ymd, "%d/%m/%Y") + " (" +
                                    dia_semana(data_somada_date_Ymd)                    + ")",
-                       "selected": selected}        
-        
+                       "selected": selected}
+
         filtro_dias.append(dict_dias)
 
     return filtro_dias
@@ -757,7 +759,7 @@ def monta_lista_dicio_consultas(filtro_paciente):
         - Data: data
         - IMC.: alfanumérico
         - CC..: alfanumérico
-        - G...: alfanumérico        
+        - G...: alfanumérico
     '''
     conn   = sqlite3.connect(config['StringConexao'])
     cursor = conn.cursor()
@@ -802,18 +804,18 @@ def monta_lista_dicio_plano_diario(filtro_paciente, data_dia_string_Ymd):
     Função....: monta_lista_dicio_plano_diario
     Parametros: filtro_paciente
 
-    Retorno: lista de dicionários filtro_plano_diario com campos:     
+    Retorno: lista de dicionários filtro_plano_diario com campos:
         - Data:       alfanumérico
         - RefeicaoID: numérico
         - Refeicao:   alfanumérico
         - Horario:    alfanumérico
         - Opcao:      numérico
         - ItemID:     numérico
-        - Item:       alfanumérico             
+        - Item:       alfanumérico
         - Quantidade: numérico
         - UnidadeID:  numérico
         - Unidade:    alfanumérico
-    '''    
+    '''
 
     conn   = sqlite3.connect(config['StringConexao'])
     cursor = conn.cursor()
@@ -851,7 +853,7 @@ def monta_lista_dicio_plano_diario(filtro_paciente, data_dia_string_Ymd):
                            "Horario":    None,
                            "Opcao":      None,
                            "ItemID":     None,
-                           "Item":       None,                           
+                           "Item":       None,
                            "Quantidade": None,
                            "UnidadeID":  None,
                            "Unidade":    None}
@@ -867,11 +869,11 @@ def monta_lista_dicio_plano_diario(filtro_paciente, data_dia_string_Ymd):
                                "Horario":    row[3],
                                "Opcao":      row[4],
                                "ItemID":     row[5],
-                               "Item":       row[6],                               
+                               "Item":       row[6],
                                "Quantidade": row[7],
                                "UnidadeID":  row[8],
                                "Unidade":    row[9]}
-    
+
         plano_diario.append(dict_plano_diario)
 
         row = cursor.fetchone()
@@ -883,10 +885,10 @@ def monta_lista_dicio_plano_diario(filtro_paciente, data_dia_string_Ymd):
 #--------------------------------------------------------------------------------------------------#
 
 def obtem_parametros():
-     
+
     config = {'StringConexao':   None}
 
-    Pasta   = 'C:/Users/telem/Documents/PythonCourse/Nutri/' 
+    Pasta   = 'C:/Users/telem/Documents/PythonCourse/Nutri/'
     Arquivo = 'config.txt'
 
     with open(Pasta + Arquivo,'r') as f:
@@ -922,7 +924,7 @@ def le_formulario(formulario):
 #--------------------------------------------------------------------------------------------------#
 
 def inclui_item():
-     
+
      print('x')
 
 #--------------------------------------------------------------------------------------------------#
@@ -933,7 +935,7 @@ def  salva_item(formulario):
 
     conn   = sqlite3.connect(config['StringConexao'])
     cursor = conn.cursor()
-   
+
     for  campo in formulario:
 
          if campo[0:17] == 'CheckboxSeleciona':
@@ -954,7 +956,7 @@ def  exclui_item(formulario):
 
     conn   = sqlite3.connect(config['StringConexao'])
     cursor = conn.cursor()
-   
+
     for  campo in formulario:
 
          if campo[0:17] == 'CheckboxSeleciona':
@@ -972,5 +974,5 @@ def  exclui_item(formulario):
 #--------------------------------------------------------------------------------------------------#
 
 if  __name__ == "__main__":
-    config = obtem_parametros()    
+    config = obtem_parametros()
     app.run(debug=True)
