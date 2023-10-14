@@ -1,0 +1,104 @@
+<DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Nutri - Paciente</title>
+	<link rel="stylesheet" href="{{url_for('static', filename='nutri.css')}}" />
+</head>
+
+<body>
+
+	<form method="post">
+
+	<header>
+
+		<h2>Dados dos Pacientes</h2>
+
+		<div id="div-filtro-pacientes">
+
+			<div id="div-filtros">
+
+				<label for="FiltroPaciente" id="LabelPaciente" name="LabelPaciente">
+					Paciente:
+				</label>
+
+				<select name="FiltroPaciente" id="FiltroPaciente">
+					{% if filtro_pacientes %}
+						{% for filtro_paciente in filtro_pacientes %}
+						<option value="{{filtro_paciente['paciente_id']}}" {% if filtro_paciente['selected'] %} selected {% endif %}>{{filtro_paciente['paciente']}}</option>
+						{% endfor %}
+					{% endif %}
+				</select>
+
+			</div>
+
+			<div id="div-botoes">
+
+				<input type="submit" id="BotaoPesquisar"     name="BotaoPesquisar"     value="Pesquisar">
+				<input type="submit" id="BotaoIncluir"       name="BotaoIncluir"       value="Incluir">
+				<input type="submit" id="BotaoSalvar"        name="BotaoSalvar"        value="Salvar">
+				<input type="submit" id="BotaoExcluir"       name="BotaoExcluir"       value="Excluir">
+				<input type="submit" id="BotaoConsultas"     name="BotaoConsultas"     value="Consultas">
+				<input type="submit" id="BotaoPlanoDiario"   name="BotaoPlanoDiario"   value="Plano Di&aacute;rio">
+				<input type="submit" id="BotaoExportarExcel" name="BotaoExportarExcel" value="Exportar Excel">
+				<input type="submit" id="BotaoVoltar"		 name="BotaoVoltar"		   value="Voltar">
+
+			</div>
+
+		</div>
+
+	</header>
+
+	<div id="div-pacientes">
+
+		<table>
+			<thead>
+				<tr>
+					<th><input type="checkbox" id="CheckboxTodos" name="CheckboxTodos">
+					<th>Paciente</th>
+					<th>Data de Nascimento</th>
+					<th>Telefone</th>
+					<th>Email</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for paciente in pacientes %}
+				<tr>
+					<td>
+						<input type="checkbox" class="CheckboxSeleciona" id="CheckboxSeleciona_{{paciente['paciente_id']}}" name="CheckboxSeleciona_{{paciente['paciente_id']}}">
+					</td>
+					<td>
+						<input type="text" class="Paciente" id="Paciente_{{paciente['paciente_id']}}" name="Paciente_{{paciente['paciente_id']}}" value="{{paciente['paciente']}}">
+					</td>
+					<td>
+					    <input type="date" class="DataNascimento" id="DataNascimento_{{paciente['paciente_id']}}" name="DataNascimento_{{paciente['paciente_id']}}" value="{{paciente['data_de_nascimento']}}">
+					</td>
+					<td>
+						<input type="text" class="Telefone" id="Telefone_{{paciente['paciente_id']}}" name="Telefone_{{paciente['paciente_id']}}" value="{{paciente['telefone']}}">
+					</td>
+					<td>
+						<input type="text" class="Email" id="Email_{{paciente['paciente_id']}}" name="Email_{{paciente['paciente_id']}}" value="{{paciente['email']}}">
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+
+	<footer>
+
+		<div class="p-mensagens">
+
+			<h3>Pacientes</h3>
+
+		</div>
+
+	</footer>
+
+	</form>
+</body>
+
+</html>

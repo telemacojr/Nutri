@@ -1,0 +1,426 @@
+@charset "UTF-8";
+
+/*-----------------------------------------------------------------*/
+/*                              HTML                               */
+/*-----------------------------------------------------------------*/
+
+html
+{
+	display: 				flex;
+	align-items: 			center;
+	flex-direction: 		column;
+}
+
+/*-----------------------------------------------------------------*/
+/*                              BODY                               */
+/*-----------------------------------------------------------------*/
+
+body		      	
+{
+	background-image:		url("imagens/fundo.jpg");
+	background-size:		cover;
+	background-position:	0 20%;
+	background: 			white;
+	color: 					black;
+	font-size: 				100%;
+	font-family:			Calibri, Arial, serif;
+	position: 				absolute;
+	border:					1px solid #8DCFF4;
+	border-radius:			20px 20px 20px 20px;
+	padding-right: 			10px;
+}
+
+/*-----------------------------------------------------------------*/
+/*                                H2                               */
+/*-----------------------------------------------------------------*/
+
+h2
+{
+	color: 				white;
+	background: 		midnightblue;
+	font-size: 			1.05em;
+	font-family:		"Arial Unicode MS", Arial, sans-serif;
+	text-align: 		center;
+	font-weight: 		bold;
+	margin-top:			10px;
+	margin-bottom:  	10px;
+	margin-left:  		10px;
+	margin-right:  		0px;
+	padding-left:		12px;
+	padding-top:		2px;
+	padding-bottom:		2px;
+	border-radius:		20px 20px 20px 20px;
+}
+
+/*-----------------------------------------------------------------*/
+/*                                H3                               */
+/*-----------------------------------------------------------------*/
+
+h3
+{
+	color: 				white;
+	background: 		midnightblue;
+	font-size: 			0.8em;
+	font-family:		"Arial Unicode MS", Arial, sans-serif;
+	text-align: 		left;
+	font-weight: 		normal;
+	margin-top:			10px;
+	margin-bottom:  	10px;
+	margin-left:  		10px;
+	margin-right:  		0px;
+	padding-left:		12px;
+	padding-top:		2px;
+	padding-bottom:		4px;
+	border-style: 		solid;
+	border-width: 		1px;
+	border-radius:		20px 20px 20px 20px;
+}
+
+/*-----------------------------------------------------------------*/
+/*                                 P                               */
+/*-----------------------------------------------------------------*/
+
+p 		      	
+{
+	font-size: 			.875em;
+	text-align: 		justify;
+	margin-top:			20px;
+	margin-left:		20px;
+	margin-right:		20px;
+	margin-bottom:		20px;
+}
+
+/*-----------------------------------------------------------------*/
+/*                                em                               */
+/*-----------------------------------------------------------------*/
+
+em	  	       	
+{
+	font-weight: 		bold;
+}
+
+/*-----------------------------------------------------------------*/
+/*                                 A                               */
+/*-----------------------------------------------------------------*/
+
+a:link	       	
+{
+	color: 				blue;
+	font-weight: 		bold;
+	text-decoration: 	none;
+	transition: 		0.5s;
+}
+
+a:visited    	
+{
+	color: 				DodgerBlue;
+	font-weight: 		bold;
+	text-decoration:	none;
+}
+
+a:hover	      	
+{
+	color:				red;
+	font-weight:		bold;
+	text-decoration: 	none;
+}
+
+/*-----------------------------------------------------------------*/
+/*                               DIVs                              */
+/*-----------------------------------------------------------------*/
+
+#div-filtro-pacientes
+{
+	background:			#ddedf7;
+	border:				1px solid #8DCFF4;
+	margin-left:		10px;
+	padding-top: 		15px;
+	padding-bottom: 	15px;
+	padding-left: 		15px;
+	padding-right: 		15px;
+	border-radius:		15px 15px 15px 15px;
+	width:				calc(99%-20px);
+	display: 			flex;
+	justify-content: 	left;
+	flex-direction: 	column;
+}
+
+#div-pacientes	   	
+{
+	background:			Gainsboro;
+	border:				1px solid #8DCFF4;
+	margin-top: 		10px;
+	margin-left:		10px;
+	padding-top: 		15px;
+	padding-bottom: 	15px;
+	padding-left: 		15px;
+	padding-right: 		15px;			
+	border-radius:		0px 0px 0px 0px;
+	width:				calc(99%-20px);
+	/*display: 			flex;*/
+	justify-content: 	center;
+	flex-direction: 	column;
+	overflow-x: 		hidden;
+	overflow-y:			scroll;
+	height: 			362px;
+}
+
+#div-filtros
+{
+	display: 			flex;
+	justify-content: 	left;
+	align-items: 		center;
+	padding-left: 		5px;
+	/*margin-top: 		20px;*/
+}
+
+#div-botoes
+{
+	display: 			flex;
+	justify-content: 	left;
+	align-items: 		center;
+	margin-top: 		20px;
+}
+
+#div-dia-plano
+{
+	background:			lightblue;
+	border:				1px solid #8DCFF4;
+	margin-top: 		10px;
+	margin-left:		0px;
+	padding-top: 		15px;
+	padding-bottom: 	15px;
+	padding-left: 		15px;
+	padding-right: 		15px;			
+	border-radius:		15px 15px 15px 15px;
+	width:				235px;
+}
+
+/*-----------------------------------------------------------------*/
+/*                               LABELs                            */
+/*-----------------------------------------------------------------*/
+
+label 		      	
+{
+	margin-right:		5px;
+}
+
+/*-----------------------------------------------------------------*/
+/*                              INPUTs                             */
+/*-----------------------------------------------------------------*/
+
+input[type=button]
+{
+	color: 				white;
+	background-color:	midnightblue;
+	padding:			2px 12px 2px 12px;
+	margin-left: 		3px;
+	border-width: 		1px;	
+	border-style: 		solid;
+	border-color: 		darkblue;
+	border-radius:		20px 20px 20px 20px;
+	transition: 		1s;
+}
+
+input[type=button]:hover
+{
+	color:				darkblue;
+	background-color:	white;
+}
+
+input[type=submit]
+{
+	color: 				white;
+	background-color:	midnightblue;
+	padding:			2px 12px 2px 12px;
+	margin-left: 		3px;
+	border-width: 		1px;	
+	border-style: 		solid;
+	border-color: 		darkblue;
+	border-radius:		20px 20px 20px 20px;
+	transition: 		1s;
+}
+
+input[type=submit]:hover
+{
+	color:				darkblue;
+	background-color:	white;
+}
+
+input[type=checkbox]
+{
+	color: 				white;
+	background: 		midnightblue;
+	padding:			2px 12px 2px 12px;
+	border-radius:		20px 20px 20px 20px;
+	accent-color:  		#C70039;
+}
+
+input[type=text]
+{
+	color: 				midnightblue;
+	background: 		white;
+	padding-top: 		4px;
+	padding-bottom: 	4px;
+	padding-left: 		2px; 
+	padding-right: 		2px;	
+	border-width: 		1px;
+	border-style: 		solid;
+	border-color: 		blue;
+	border-radius:		3px 3px 3px 3px;
+}
+
+input[type=text]:hover
+{
+	color:				darkblue;
+	background-color:	aliceblue;
+}
+
+input[type=text]:focus
+{
+	color:				black;
+	background-color:	whitesmoke;
+	border-width: 		1px;
+	border-style: 		solid;
+	border-color: 		blue;
+}
+
+input[type=date]
+{
+	color: 				midnightblue;
+	background: 		white;
+	font-family: 		Calibri, Arial, serif;
+	border-width: 		1px;	
+	border-width: 		1px;
+	border-style: 		solid;
+	border-color: 		blue;
+	padding:			2px 12px 2px 12px;
+	border-radius:		3px 3px 3px 3px;
+}
+
+input[type=date]:hover
+{
+	color:				darkblue;
+	background-color:	aliceblue;
+}
+
+select 
+{
+	width: 				200px;
+	padding-top: 		3px;
+	padding-bottom: 	3px;
+	padding-left: 		2px; 
+	padding-right: 		2px;
+	border-width: 		1px;
+	border-style: 		solid;
+	border-color: 		blue;
+	background-color: 	white;
+	border-radius:		3px 3px 3px 3px;	
+}
+
+select:hover
+{
+	color:				darkblue;
+	background-color:	aliceblue;
+}
+
+/*-----------------------------------------------------------------*/
+/*                              TABLES                             */
+/*-----------------------------------------------------------------*/
+
+/*
+table
+{
+	margin-left: 		auto;
+	margin-right: 		auto;
+}
+*/
+
+th
+{
+	color: 				white;
+	background: 		midnightblue;
+	padding:			2px 12px 2px 12px;
+}
+
+td
+{
+	padding-top:	 	5px;
+	padding-bottom: 	5px;
+	padding-left: 		10px; 
+	padding-right: 		10px;
+	text-align: 		center;
+}
+
+tr
+{
+	background: 		white;
+}
+
+tr:hover 
+{
+	background-color: 	whitesmoke;
+}
+
+/*-----------------------------------------------------------------*/
+/*                                IDs                              */
+/*-----------------------------------------------------------------*/
+
+#BotaoPesquisar, #BotaoExcluir, #BotaoPlanoDiario, #BotaoExportarExcel, #BotaoCopiarPeriodo
+{
+	margin-right: 		20px;
+}
+
+/*-----------------------------------------------------------------*/
+/*                              CLASSes                            */
+/*-----------------------------------------------------------------*/
+
+.Telefone
+{
+	width: 				140px;
+}
+
+.Email
+{
+	width: 				250px;
+}
+
+.IMC
+{
+	width: 				50px;
+}
+
+.CC
+{
+	width: 				40px;
+}
+
+.G
+{
+	width: 				40px;
+}
+
+.Opcao
+{
+	width: 				40px;
+}
+
+.Quantidade
+{
+	width: 				50px;
+}
+
+.Unidade
+{
+	width: 				160px;
+}
+
+.Item
+{
+	width: 				260px;
+}
+
+.Refeicao
+{
+	width: 				140px;
+}

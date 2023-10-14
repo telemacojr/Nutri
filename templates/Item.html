@@ -1,0 +1,90 @@
+<DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Nutri - Item</title>
+	<link rel="stylesheet" href="{{url_for('static', filename='nutri.css')}}" />
+</head>
+
+<body>
+
+	<form method="post">
+
+	<header>
+
+		<h2>Dados dos Items</h2>
+
+		<div id="div-filtro-pacientes">
+
+			<div id="div-filtros">
+
+				<label for="FiltroItem" id="LabelItem" name="LabelItem">
+					Item:
+				</label>
+
+				<select name="FiltroItem" id="FiltroItem">
+					{% if filtro_itens %}
+						{% for filtro_item in filtro_itens %}
+						<option value="{{filtro_item['item_id']}}" {% if filtro_item['selected'] %} selected {% endif %}>{{filtro_item['item']}}</option>
+						{% endfor %}
+					{% endif %}
+				</select>
+
+			</div>
+
+			<div id="div-botoes">
+
+				<input type="submit" id="BotaoPesquisar"     name="BotaoPesquisar"     value="Pesquisar">
+				<input type="submit" id="BotaoIncluir"       name="BotaoIncluir"       value="Incluir">
+				<input type="submit" id="BotaoSalvar"        name="BotaoSalvar"        value="Salvar">
+				<input type="submit" id="BotaoExcluir"       name="BotaoExcluir"       value="Excluir">
+				<input type="submit" id="BotaoExportarExcel" name="BotaoExportarExcel" value="Exportar Excel">
+				<input type="submit" id="BotaoVoltar"		 name="BotaoVoltar"		   value="Voltar">
+
+			</div>
+
+		</div>
+
+	</header>
+
+	<div id="div-pacientes">
+
+		<table>
+			<thead>
+				<tr>
+					<th><input type="checkbox" id="CheckboxTodos" name="CheckboxTodos">
+					<th>Item</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in itens %}
+				<tr>
+					<td>
+						<input type="checkbox" class="CheckboxSeleciona" id="CheckboxSeleciona_{{item['item_id']}}" name="CheckboxSeleciona_{{item['item_id']}}">
+					</td>
+					<td>
+						<input type="text" class="Item" id="Item_{{item['item_id']}}" name="Item_{{item['item_id']}}" value="{{item['item']}}">
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+
+	<footer>
+
+		<div class="p-mensagens">
+
+			<h3>Items</h3>
+
+		</div>
+
+	</footer>
+
+	</form>
+</body>
+
+</html>

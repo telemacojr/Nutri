@@ -1,0 +1,99 @@
+<DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Nutri - Consultas</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='nutri.css') }}" />
+</head>
+<body>
+
+	<form method="post">
+
+		<header>
+
+			<h2>Consultas do Paciente</h2>
+
+			<div id="div-filtro-pacientes">
+
+				<div id="div-filtros">
+
+					<label for="FiltroPaciente" id="LabelPaciente" name="LabelPaciente">
+						Paciente:
+					</label>
+
+					<select name="FiltroPaciente" id="FiltroPaciente">
+						{% for filtro_paciente in filtro_pacientes %}
+						<option value="{{filtro_paciente['paciente_id']}}" {% if filtro_paciente['selected'] %} selected {% endif %}>{{filtro_paciente['paciente']}}</option>
+						{% endfor %}
+					</select>
+
+				</div>
+
+				<div id="div-botoes">
+
+					<input type="submit" id="BotaoPesquisar"     name="BotaoPesquisar"     value="Pesquisar">
+					<input type="submit" id="BotaoIncluir"       name="BotaoIncluir"       value="Incluir">
+					<input type="submit" id="BotaoSalvar"        name="BotaoSalvar"        value="Salvar">
+					<input type="submit" id="BotaoExcluir"       name="BotaoExcluir"       value="Excluir">
+					<input type="submit" id="BotaoExportarExcel" name="BotaoExportarExcel" value="Exportar Excel">
+					<input type="submit" id="BotaoVoltar"        name="BotaoVoltar"        value="Voltar">
+
+				</div>
+			</div>
+
+		</header>
+
+		<div id="div-pacientes">
+
+			<table>
+				<thead>
+					<tr>
+						<th><input type="checkbox" id="CheckboxTodos" name="CheckboxTodos">
+						<th>Data</th>
+						<th>IMC</th>
+						<th>CC</th>
+						<th>G%</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for consulta in consultas %}
+					<tr>
+						<td>
+							<input type="checkbox" class="CheckboxSeleciona" id="CheckboxSeleciona_{{consulta['data']}}" name="CheckboxSeleciona_{{consulta['data']}}">
+						</td>
+						<td>
+							<input type="date" class="Data" id="Data_{{consulta['data']}}" name="Data_{{consulta['data']}}" value="{{consulta['data']}}">
+						</td>
+						<td>
+							<input type="number" class="IMC" id="IMC_{{consulta['data']}}" name="IMC_{{consulta['data']}}" value="{{consulta['imc']}}">
+						</td>
+						<td>
+							<input type="number" class="CC" id="CC_{{consulta['data']}}" name="CC_{{consulta['data']}}" value="{{consulta['cc']}}">
+						</td>
+						<td>
+							<input type="number" class="G" id="G_{{consulta['data']}}" name="G_{{consulta['data']}}" value="{{consulta['g']}}">
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+		</div>
+
+		<footer>
+
+			<div class="p-mensagens">
+
+				<h3>Consultas</h3>
+
+			</div>
+
+		</footer>
+
+	</form>
+
+</body>
+
+</html>

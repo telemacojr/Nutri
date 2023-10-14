@@ -1,0 +1,1 @@
+StringConexao	C:/Users/telem/Documents/PythonCourse/Nutri/DB/Nutri.db

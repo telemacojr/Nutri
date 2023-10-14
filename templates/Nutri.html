@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Nutri - Página inicial</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='nutri.css') }}" />
+    </head>
+    <body>
+        <form method="post">
+            <header>
+
+                <h2>Nutri</h2>
+
+                <div id="div-filtro-pacientes">
+
+                    <p>Seja bem-vindo ao Nutri, um aplicativo que organizará a sua rotina neste momento de reeducação alimentar!</p>
+
+                    <div id="div-botoes">
+
+                        <input type="submit" id="BotaoPacientes"     name="BotaoPacientes"     value="Pacientes" />
+                        <input type="submit" id="BotaoItens"         name="BotaoItens"         value="Itens" />
+                        <input type="submit" id="BotaoUnidadeMedida" name="BotaoUnidadeMedida" value="Unidades de Medida" />
+                        <input type="submit" id="BotaoCardapio"      name="BotaoCardapio"      value="Cardápios" />
+                        <input type="submit" id="BotaoPlano"         name="BotaoPlano"         value="Planos" />
+                        <input type="submit" id="BotaoReceita"       name="BotaoReceita"       value="Receitas" />
+                        <input type="submit" id="BotaoSubstituicao"  name="BotaoSubstituicao"  value="Substituições" />
+
+                    </div>
+
+                </div>
+
+            </header>
+
+            <footer>
+
+                <div class="p-mensagens">
+
+                    <h3>&copy; 2023 Telêmaco Queiroz Júnior | Henrique Pureza Queiroz</h3>
+
+                </div>
+
+            </footer>
+        </form>
+    </body>
+</html>
