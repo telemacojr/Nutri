@@ -1,167 +1,146 @@
-<DOCTYPE html>
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width=1.0" />
+		<title>Nutri - Plano Diário</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='nutri.css') }}" />
+	</head>
+	<body>
+		<form method="post">
+			<header>
+				<h2>Plano Diário</h2>
 
-<html lang="en">
+				<div id="div-filtro-pacientes">
+					<div id="div-filtros">
+						<label for="FiltroPaciente" id="LabelPaciente" name="LabelPaciente">
+							Paciente:
+						</label>
 
-<head>
-	<meta charset="UTF-8" />
-	<title>Nutri - Plano Diário</title>
-	<link rel="stylesheet" href="{{ url_for('static', filename='nutri.css') }}" />
-</head>
+						<select name="FiltroPaciente" id="FiltroPaciente">
+							{% if filtro_pacientes %}
+								{% for filtro_paciente in filtro_pacientes %}
+								<option value="{{filtro_paciente['paciente_id']}}" {% if filtro_paciente['selected'] %} selected {% endif %}>{{filtro_paciente['paciente']}}</option>
+								{% endfor %}
+							{% endif %}
+						</select>
 
-<body>
+						<label for="FiltroDataNascimento" id="LabelDataInicial"  name="LabelDataInicial">
+							Data Inicial:
+						</label>
+						<input type="date"                id="FiltroDataInicial" name="FiltroDataInicial" value="{{filtro_data_inicial}}">
 
-	<form method="post">
+						<label for="FiltroDataNascimento" id="LabelDataFinal"    name="LabelDataFinal">
+							Data Final:
+						</label>
+						<input type="date"                id="FiltroDataFinal"   name="FiltroDataFinal"   value="{{filtro_data_final}}">
+					</div>
 
-		<header>
+					<div id="div-botoes">
+						<input type="submit" id="BotaoPesquisar"     name="BotaoPesquisar"     value="Pesquisar" />
+						<input type="submit" id="BotaoIncluir"       name="BotaoIncluir"       value="Incluir" />
+						<input type="submit" id="BotaoSalvar"        name="BotaoSalvar"        value="Salvar" />
+						<input type="submit" id="BotaoExcluir"       name="BotaoExcluir"       value="Excluir" />
+						<input type="submit" id="BotaoCopiar"        name="BotaoCopiar"        value="Copiar" />
+						<input type="submit" id="BotaoCopiarPeriodo" name="BotaoCopiarPeriodo" value="Copiar Período" />
+						<input type="submit" id="BotaoExportarExcel" name="BotaoExportarExcel" value="Exportar Excel" />
+						<a class="link" href="/pacientes?paciente_id={{ paciente_id }}" id="Voltar">Voltar</a>
+					</div>
 
-			<h2>Plano Diário</h2>
-
-			<div id="div-filtro-pacientes">
-
-				<div id="div-filtros">
-					<label for="FiltroPaciente" id="LabelPaciente" name="LabelPaciente">
-						Paciente:
-					</label>
-
-					<select name="FiltroPaciente" id="FiltroPaciente">
-						{% if filtro_pacientes %}
-							{% for filtro_paciente in filtro_pacientes %}
-							<option value="{{filtro_paciente['paciente_id']}}" {% if filtro_paciente['selected'] %} selected {% endif %}>{{filtro_paciente['paciente']}}</option>
+					<div id="div-dia-plano">
+						<label for="FiltroDia" id="LabelDia" name="LabelDia">
+							Dia:
+						</label>
+						<select name="FiltroDia" id="FiltroDia">
+							{% for filtro_dia in filtro_dias %}
+							<option value="{{filtro_dia['dia']}}"  {% if filtro_dia['selected'] %} selected {% endif %}>{{filtro_dia['dia']}}</option>
 							{% endfor %}
-						{% endif %}
-					</select>
-
-					&nbsp;&nbsp;&nbsp;&nbsp;
-
-					<label for="FiltroDataNascimento" id="LabelDataInicial"  name="LabelDataInicial">
-						Data Inicial:
-					</label>
-					<input type="date"                id="FiltroDataInicial" name="FiltroDataInicial" value="{{filtro_data_inicial}}">
-
-					&nbsp;&nbsp;&nbsp;&nbsp;
-
-					<label for="FiltroDataNascimento" id="LabelDataFinal"    name="LabelDataFinal">
-						Data Final:
-					</label>
-					<input type="date"                id="FiltroDataFinal"   name="FiltroDataFinal"   value="{{filtro_data_final}}">
+						</select>
+					</div>
 				</div>
+			</header>
 
-				<div id="div-botoes">
-					<input type="submit" id="BotaoPesquisar"     name="BotaoPesquisar"     value="Pesquisar" />
-					<input type="submit" id="BotaoIncluir"       name="BotaoIncluir"       value="Incluir" />
-					<input type="submit" id="BotaoSalvar"        name="BotaoSalvar"        value="Salvar" />
-					<input type="submit" id="BotaoExcluir"       name="BotaoExcluir"       value="Excluir" />
-					<input type="submit" id="BotaoCopiar"        name="BotaoCopiar"        value="Copiar" />
-					<input type="submit" id="BotaoCopiarPeriodo" name="BotaoCopiarPeriodo" value="Copiar Período" />
-					<input type="submit" id="BotaoExportarExcel" name="BotaoExportarExcel" value="Exportar Excel" />
-					<input type="submit" id="BotaoVoltar"        name="BotaoVoltar"        value="Voltar" />
-				</div>
-
-				<div id="div-dia-plano">
-					<label for="FiltroDia" id="LabelDia" name="LabelDia">
-						Dia:
-					</label>
-					<select name="FiltroDia" id="FiltroDia">
-						{% for filtro_dia in filtro_dias %}
-						<option value="{{filtro_dia['dia']}}"  {% if filtro_dia['selected'] %} selected {% endif %}>{{filtro_dia['dia']}}</option>
+			<div id="div-pacientes">
+				<table>
+					<thead>
+						<tr>
+							<th><input type="checkbox" id="CheckboxTodos" name="CheckboxTodos">
+							<th>Refeição</th>
+							<th>Opção</th>
+							<th>Item</th>
+							<th>Quantidade</th>
+							<th>Unidade</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for plano_diario in planos_diarios %}
+						<tr>
+							<td>
+								<input type="checkbox" class="CheckboxSeleciona" id="CheckboxSeleciona_{{plano_diario['id']}}" name="CheckboxSeleciona_{{plano_diario['id']}}">
+							</td>
+							<td>
+								<select name="Refeicao_{{plano_diario['id']}}" class="Refeicao" id="Refeicao_{{plano_diario['id']}}">
+									{% for refeicao in refeicoes %}
+									<option value="{{refeicao['refeicao_id']}}" {% if refeicao['refeicao'] == plano_diario['Refeicao']: %} selected {% endif %}>{{refeicao['refeicao']}}</option>
+									{% endfor %}
+								</select>
+							</td>
+							<td>
+								<select name="Opcao_{{plano_diario['id']}}" class="Opcao" id="Opcao_{{plano_diario['id']}}">
+									{% for opcao in opcoes %}
+									<option value="{{opcao['opcao_id']}}" {% if opcao['opcao'] == plano_diario['Opcao']: %} selected {% endif %}>{{opcao['opcao']}}</option>
+									{% endfor %}
+								</select>
+							</td>
+							<td>
+								<select name="Item_{{plano_diario['id']}}" class="Item" id="Item_{{plano_diario['id']}}">
+									{% for item in itens %}
+									<option value="{{item['item_id']}}" {% if item['item'] == plano_diario['Item']: %} selected {% endif %}>{{item['item']}}</option>
+									{% endfor %}
+								</select>
+							</td>
+							<td>
+								<input type="number" class="Quantidade" id="Quantidade_{{plano_diario['id']}}" name="Quantidade_{{plano_diario['id']}}" value="{{plano_diario['Quantidade']}}">
+							</td>
+							<td>
+								<select name="Unidade_{{plano_diario['id']}}" class="Unidade" id="Unidade_{{plano_diario['id']}}">
+									{% for unidade in unidades %}
+									<option value="{{unidade['unidade_id']}}" {% if unidade['unidade'] == plano_diario['Unidade']: %} selected {% endif %}>{{unidade['unidade']}}</option>
+									{% endfor %}
+								</select>
+							</td>
+						</tr>
 						{% endfor %}
-					</select>
+					</tbody>
+				</table>
+			</div>
+
+			<footer>
+				<div class="p-mensagens">
+					<h3>Plano Diário</h3>
 				</div>
+			</footer>
+		</form>
 
-			</div>
-
-
-		</header>
-
-		<div id="div-pacientes">
-
-			<table>
-				<thead>
-					<tr>
-						<th><input type="checkbox" id="CheckboxTodos" name="CheckboxTodos">
-						<th>Refeição</th>
-						<th>Opção</th>
-						<th>Item</th>
-						<th>Quantidade</th>
-						<th>Unidade</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for plano_diario in planos_diarios %}
-					<tr>
-						<td>
-							<input type="checkbox" class="CheckboxSeleciona" id="CheckboxSeleciona_{{plano_diario['id']}}" name="CheckboxSeleciona_{{plano_diario['id']}}">
-						</td>
-						<td>
-							<select name="Refeicao_{{plano_diario['id']}}" class="Refeicao" id="Refeicao_{{plano_diario['id']}}">
-								{% for refeicao in refeicoes %}		
-								<option value="{{refeicao['refeicao_id']}}" {% if refeicao['refeicao'] == plano_diario['Refeicao']: %} selected {% endif %}>{{refeicao['refeicao']}}</option>
-								{% endfor %}
-							</select>
-						</td>
-						<td>
-							<select name="Opcao_{{plano_diario['id']}}" class="Opcao" id="Opcao_{{plano_diario['id']}}">
-								{% for opcao in opcoes %}
-								<option value="{{opcao['opcao_id']}}" {% if opcao['opcao'] == plano_diario['Opcao']: %} selected {% endif %}>{{opcao['opcao']}}</option>
-								{% endfor %}
-							</select>
-						</td>
-						<td>
-							<select name="Item_{{plano_diario['id']}}" class="Item" id="Item_{{plano_diario['id']}}">
-								{% for item in itens %}								
-								<option value="{{item['item_id']}}" {% if item['item'] == plano_diario['Item']: %} selected {% endif %}>{{item['item']}}</option>
-								{% endfor %}
-							</select>
-						</td>
-						<td>
-							<input type="number" class="Quantidade" id="Quantidade_{{plano_diario['id']}}" name="Quantidade_{{plano_diario['id']}}" value="{{plano_diario['Quantidade']}}">
-						</td>
-						<td>
-							<select name="Unidade_{{plano_diario['id']}}" class="Unidade" id="Unidade_{{plano_diario['id']}}">
-								{% for unidade in unidades %}								
-								<option value="{{unidade['unidade_id']}}" {% if unidade['unidade'] == plano_diario['Unidade']: %} selected {% endif %}>{{unidade['unidade']}}</option>
-								{% endfor %}
-							</select>							
-						</td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-
-		</div>
-
-		<footer>
-
-			<div class="p-mensagens">
-
-				<h3>Plano Diário</h3>
-
-			</div>
-
-		</footer>
-	</form>
-
-	<script>
-		document.getElementById("CheckboxTodos").addEventListener
-			("click", () => 
-				{
-					document.querySelectorAll(".CheckboxSeleciona").forEach
-						(checkBox => 
-							{
-								if (document.getElementById("CheckboxTodos").checked)
+		<script>
+			document.getElementById("CheckboxTodos").addEventListener
+				("click", () =>
+					{
+						document.querySelectorAll(".CheckboxSeleciona").forEach
+							(checkBox =>
 								{
-									checkBox.checked = true;
+									if (document.getElementById("CheckboxTodos").checked)
+									{
+										checkBox.checked = true;
+									}
+									else
+									{
+										checkBox.checked = false;
+									}
 								}
-								else
-								{
-									checkBox.checked = false;
-								}
-							}
-						);
-				}
-			);
-	</script>
-
-</body>
-
+							);
+					}
+				);
+		</script>
+	</body>
 </html>

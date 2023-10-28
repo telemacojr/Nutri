@@ -1,90 +1,68 @@
-<DOCTYPE html>
+<!DOCTYPE html>
+<html lang="pt">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Nutri - Item</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='nutri.css') }}" />
+	</head>
+	<body>
+		<form method="post">
+			<header>
+				<h2>Dados dos Items</h2>
 
-<html lang="en">
+				<div id="div-filtro-pacientes">
+					<div id="div-filtros">
+						<label for="FiltroItem" id="LabelItem" name="LabelItem">
+							Item:
+						</label>
 
-<head>
-	<meta charset="UTF-8" />
-	<title>Nutri - Item</title>
-	<link rel="stylesheet" href="{{url_for('static', filename='nutri.css')}}" />
-</head>
+						<select name="ComboItem" id="FiltroItem">
+							{% for item in combo_itens %}
+							<option value="{{ item['item_id'] }}" {% if item['selected'] %} selected {% endif %}>{{ item['item'] }}</option>
+							{% endfor %}
+						</select>
+					</div>
 
-<body>
+					<div id="div-botoes">
+						<input type="submit" id="Pesquisar"     name="Pesquisar"     value="Pesquisar" />
+						<input type="submit" id="Incluir"       name="Incluir"       value="Incluir" />
+						<input type="submit" id="Salvar"        name="Salvar"        value="Salvar" />
+						<input type="submit" id="Excluir"       name="Excluir"       value="Excluir" />
+						<input type="submit" id="ExportarExcel" name="ExportarExcel" value="Exportar Excel" />
+						<a class="link" href="/">Voltar</a>
+					</div>
+				</div>
+			</header>
 
-	<form method="post">
-
-	<header>
-
-		<h2>Dados dos Items</h2>
-
-		<div id="div-filtro-pacientes">
-
-			<div id="div-filtros">
-
-				<label for="FiltroItem" id="LabelItem" name="LabelItem">
-					Item:
-				</label>
-
-				<select name="FiltroItem" id="FiltroItem">
-					{% if filtro_itens %}
-						{% for filtro_item in filtro_itens %}
-						<option value="{{filtro_item['item_id']}}" {% if filtro_item['selected'] %} selected {% endif %}>{{filtro_item['item']}}</option>
+			<div id="div-pacientes">
+				<table>
+					<thead>
+						<tr>
+							<th><input type="checkbox" id="CheckboxTodos" name="CheckboxTodos"></th>
+							<th>Item</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for item in itens %}
+						<tr>
+							<td>
+								<input type="checkbox" class="CheckboxSeleciona" id="CheckboxSeleciona_{{item['item_id']}}" name="CheckboxSeleciona_{{item['item_id']}}">
+							</td>
+							<td>
+								<input type="text" class="Item" id="Item_{{item['item_id']}}" name="Item_{{item['item_id']}}" value="{{item['item']}}">
+							</td>
+						</tr>
 						{% endfor %}
-					{% endif %}
-				</select>
-
+					</tbody>
+				</table>
 			</div>
 
-			<div id="div-botoes">
-
-				<input type="submit" id="BotaoPesquisar"     name="BotaoPesquisar"     value="Pesquisar">
-				<input type="submit" id="BotaoIncluir"       name="BotaoIncluir"       value="Incluir">
-				<input type="submit" id="BotaoSalvar"        name="BotaoSalvar"        value="Salvar">
-				<input type="submit" id="BotaoExcluir"       name="BotaoExcluir"       value="Excluir">
-				<input type="submit" id="BotaoExportarExcel" name="BotaoExportarExcel" value="Exportar Excel">
-				<input type="submit" id="BotaoVoltar"		 name="BotaoVoltar"		   value="Voltar">
-
-			</div>
-
-		</div>
-
-	</header>
-
-	<div id="div-pacientes">
-
-		<table>
-			<thead>
-				<tr>
-					<th><input type="checkbox" id="CheckboxTodos" name="CheckboxTodos">
-					<th>Item</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for item in itens %}
-				<tr>
-					<td>
-						<input type="checkbox" class="CheckboxSeleciona" id="CheckboxSeleciona_{{item['item_id']}}" name="CheckboxSeleciona_{{item['item_id']}}">
-					</td>
-					<td>
-						<input type="text" class="Item" id="Item_{{item['item_id']}}" name="Item_{{item['item_id']}}" value="{{item['item']}}">
-					</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-
-	</div>
-
-	<footer>
-
-		<div class="p-mensagens">
-
-			<h3>Items</h3>
-
-		</div>
-
-	</footer>
-
-	</form>
-</body>
-
+			<footer>
+				<div class="p-mensagens">
+					<h3>Items</h3>
+				</div>
+			</footer>
+		</form>
+	</body>
 </html>

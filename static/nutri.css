@@ -15,9 +15,9 @@ html
 /*                              BODY                               */
 /*-----------------------------------------------------------------*/
 
-body		      	
+body
 {
-	background-image:		url("imagens/fundo.jpg");
+	background-image:		url("fundo.jpg");
 	background-size:		cover;
 	background-position:	0 20%;
 	background: 			white;
@@ -80,7 +80,7 @@ h3
 /*                                 P                               */
 /*-----------------------------------------------------------------*/
 
-p 		      	
+p
 {
 	font-size: 			.875em;
 	text-align: 		justify;
@@ -94,7 +94,7 @@ p
 /*                                em                               */
 /*-----------------------------------------------------------------*/
 
-em	  	       	
+em
 {
 	font-weight: 		bold;
 }
@@ -103,7 +103,7 @@ em
 /*                                 A                               */
 /*-----------------------------------------------------------------*/
 
-a:link	       	
+a:link:not(.link)
 {
 	color: 				blue;
 	font-weight: 		bold;
@@ -111,14 +111,14 @@ a:link
 	transition: 		0.5s;
 }
 
-a:visited    	
+a:visited:not(.link)
 {
 	color: 				DodgerBlue;
 	font-weight: 		bold;
 	text-decoration:	none;
 }
 
-a:hover	      	
+a:hover:not(.link)
 {
 	color:				red;
 	font-weight:		bold;
@@ -145,7 +145,7 @@ a:hover
 	flex-direction: 	column;
 }
 
-#div-pacientes	   	
+#div-pacientes
 {
 	background:			Gainsboro;
 	border:				1px solid #8DCFF4;
@@ -154,7 +154,7 @@ a:hover
 	padding-top: 		15px;
 	padding-bottom: 	15px;
 	padding-left: 		15px;
-	padding-right: 		15px;			
+	padding-right: 		15px;
 	border-radius:		0px 0px 0px 0px;
 	width:				calc(99%-20px);
 	/*display: 			flex;*/
@@ -191,7 +191,7 @@ a:hover
 	padding-top: 		15px;
 	padding-bottom: 	15px;
 	padding-left: 		15px;
-	padding-right: 		15px;			
+	padding-right: 		15px;
 	border-radius:		15px 15px 15px 15px;
 	width:				235px;
 }
@@ -200,7 +200,7 @@ a:hover
 /*                               LABELs                            */
 /*-----------------------------------------------------------------*/
 
-label 		      	
+label
 {
 	margin-right:		5px;
 }
@@ -215,7 +215,7 @@ input[type=button]
 	background-color:	midnightblue;
 	padding:			2px 12px 2px 12px;
 	margin-left: 		3px;
-	border-width: 		1px;	
+	border-width: 		1px;
 	border-style: 		solid;
 	border-color: 		darkblue;
 	border-radius:		20px 20px 20px 20px;
@@ -228,20 +228,26 @@ input[type=button]:hover
 	background-color:	white;
 }
 
-input[type=submit]
+input[type=submit], button[type=submit], .link
 {
 	color: 				white;
 	background-color:	midnightblue;
 	padding:			2px 12px 2px 12px;
 	margin-left: 		3px;
-	border-width: 		1px;	
+	border-width: 		1px;
 	border-style: 		solid;
 	border-color: 		darkblue;
-	border-radius:		20px 20px 20px 20px;
+	border-radius:		20px;
 	transition: 		1s;
 }
 
-input[type=submit]:hover
+.link {
+	text-decoration: none;
+	font-size: 11pt;
+	padding: 2px 12px 0px 12px;
+}
+
+input[type=submit]:hover, button[type=submit]:hover, .link:hover
 {
 	color:				darkblue;
 	background-color:	white;
@@ -262,8 +268,8 @@ input[type=text]
 	background: 		white;
 	padding-top: 		4px;
 	padding-bottom: 	4px;
-	padding-left: 		2px; 
-	padding-right: 		2px;	
+	padding-left: 		2px;
+	padding-right: 		2px;
 	border-width: 		1px;
 	border-style: 		solid;
 	border-color: 		blue;
@@ -290,7 +296,7 @@ input[type=date]
 	color: 				midnightblue;
 	background: 		white;
 	font-family: 		Calibri, Arial, serif;
-	border-width: 		1px;	
+	border-width: 		1px;
 	border-width: 		1px;
 	border-style: 		solid;
 	border-color: 		blue;
@@ -304,18 +310,18 @@ input[type=date]:hover
 	background-color:	aliceblue;
 }
 
-select 
+select
 {
 	width: 				200px;
 	padding-top: 		3px;
 	padding-bottom: 	3px;
-	padding-left: 		2px; 
+	padding-left: 		2px;
 	padding-right: 		2px;
 	border-width: 		1px;
 	border-style: 		solid;
 	border-color: 		blue;
 	background-color: 	white;
-	border-radius:		3px 3px 3px 3px;	
+	border-radius:		3px 3px 3px 3px;
 }
 
 select:hover
@@ -347,7 +353,7 @@ td
 {
 	padding-top:	 	5px;
 	padding-bottom: 	5px;
-	padding-left: 		10px; 
+	padding-left: 		10px;
 	padding-right: 		10px;
 	text-align: 		center;
 }
@@ -357,7 +363,7 @@ tr
 	background: 		white;
 }
 
-tr:hover 
+tr:hover
 {
 	background-color: 	whitesmoke;
 }
@@ -366,7 +372,8 @@ tr:hover
 /*                                IDs                              */
 /*-----------------------------------------------------------------*/
 
-#BotaoPesquisar, #BotaoExcluir, #BotaoPlanoDiario, #BotaoExportarExcel, #BotaoCopiarPeriodo
+#BotaoPesquisar, #BotaoExcluir, #BotaoPlanoDiario, #BotaoExportarExcel, #BotaoCopiarPeriodo,
+#Pesquisar, #Excluir, #PlanoDiario, #ExportarExcel, #CopiarPeriodo
 {
 	margin-right: 		20px;
 }
