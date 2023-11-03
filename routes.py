@@ -118,21 +118,68 @@ def pagina_dos_itens():
             return render_template(
                 "Item.html",
                 combo_itens = combos.montar_combo_dos_itens(item_selecionado),
-                itens       = tabelas.montar_tabela_de_itens(item_selecionado)
+                itens       = tabelas.montar_tabela_de_itens(item_selecionado, False)
             )
-        # elif "Incluir" in botoes:
-            # Código a adicionar
-        # elif "Salvar" in botoes:
-            # salva_item(formulario)
-        # elif "Excluir" in botoes:
-            # exclui_item(formulario)
+        elif "Incluir" in botoes:
+            return render_template(
+                "Item.html",
+                combo_itens = combos.montar_combo_dos_itens(0),
+                itens       = tabelas.montar_tabela_de_itens(0, True)
+            )
+        elif "Salvar" in botoes:
+            # Se estiver incluindo um item novo
+            if "CheckboxSeleciona_0" in formulario:
+                if formulario["Item_0"]:
+                    crud.incluir_item(formulario["Item_0"])
+                else:
+                    return render_template(
+                        "Item.html",
+                        combo_itens = combos.montar_combo_dos_itens(0),
+                        itens       = tabelas.montar_tabela_de_itens(0, True),
+                        erro        = "Digite um nome para o item."
+                    )
+            # Atualizando item
+            else:
+                for key in formulario.keys():
+                    if key.startswith("CheckboxSeleciona_"):
+                        crud.atualizar_item(key.split("_")[1], formulario[f'Item_{key.split("_")[1]}'])
+
+                        return render_template(
+                            "Item.html",
+                            combo_itens = combos.montar_combo_dos_itens(item_id),
+                            itens       = tabelas.montar_tabela_de_itens(item_id, False),
+                        )
+
+                return render_template(
+                    "Item.html",
+                    combo_itens = combos.montar_combo_dos_itens(item_id),
+                    itens       = tabelas.montar_tabela_de_itens(item_id, False),
+                    erro        = "Marque qual item vai atualizar."
+                )
+        elif "Excluir" in botoes:
+            for key in formulario.keys():
+                if key.startswith("CheckboxSeleciona_"):
+                    crud.excluir_item(key.split("_")[1])
+
+                    return render_template(
+                        "Item.html",
+                        combo_itens = combos.montar_combo_dos_itens(item_id),
+                        itens       = tabelas.montar_tabela_de_itens(item_id, False),
+                    )
+
+            return render_template(
+                "Item.html",
+                combo_itens = combos.montar_combo_dos_itens(item_id),
+                itens       = tabelas.montar_tabela_de_itens(item_id, False),
+                erro        = "Marque qual item vai excluir."
+            )
         # elif "ExportarExcel" in botoes:
             # Código a adicionar
 
     return render_template(
         "Item.html",
         combo_itens = combos.montar_combo_dos_itens(item_id),
-        itens       = tabelas.montar_tabela_de_itens(item_id)
+        itens       = tabelas.montar_tabela_de_itens(item_id, False)
     )
 
 #------------------------------------------------------------------------------#
@@ -277,4 +324,4 @@ def pagina_do_plano_diario():
 #------------------------------------------------------------------------------#
 
 if __name__ == "__main__":
-    app.run(debug=True, port=8080)
+    app.run(debug=True)

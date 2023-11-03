@@ -42,8 +42,8 @@ def soma_dia_data(data: date, dias: int) -> datetime:
     Realiza a soma entre a data inicial e o número de dias fornecidos.
 
     #### Parâmetros:
-    :param data (date): data inicial, em ano-mês-dia.
-    :param dias (int): número de dias a ser somado.
+    :param: data (date): data inicial, em ano-mês-dia.
+    :param: dias (int): número de dias a ser somado.
 
     #### Retorna:
     - Um objeto `datetime` com a data resultante.
@@ -65,7 +65,7 @@ def dia_semana(data: date) -> str:
     Recebe um objeto `date` e determina qual o dia da semana.
 
     #### Parâmetros:
-    :param data (date): data a ser analisada.
+    :param: data (date): data a ser analisada.
 
     #### Retorna:
     - Uma string com o dia da semana, em português.
@@ -99,7 +99,7 @@ def obter_configuracoes(caminho_do_arquivo: str) -> dict:
     Obtêm as configurações do arquivo XML de configurações.
 
     #### Parâmetros:
-    param: caminho_do_arquivo (str): o caminho do arquivo XML de configurações.
+    :param: caminho_do_arquivo (str): o caminho do arquivo XML de configurações.
 
     #### Retorna:
     - Um dicionário com as configurações.

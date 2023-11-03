@@ -9,7 +9,7 @@
 	<body>
 		<form method="post">
 			<header>
-				<h2>Dados dos Items</h2>
+				<h2>Dados dos Itens</h2>
 
 				<div id="div-filtro-pacientes">
 					<div id="div-filtros">
@@ -47,10 +47,22 @@
 						{% for item in itens %}
 						<tr>
 							<td>
-								<input type="checkbox" class="CheckboxSeleciona" id="CheckboxSeleciona_{{item['item_id']}}" name="CheckboxSeleciona_{{item['item_id']}}">
+								<input
+									type="checkbox"
+									class="CheckboxSeleciona"
+									id="CheckboxSeleciona_{{item['item_id']}}"
+									name="CheckboxSeleciona_{{item['item_id']}}"
+									{% if item['checked'] %} checked {% endif %}
+								/>
 							</td>
 							<td>
-								<input type="text" class="Item" id="Item_{{item['item_id']}}" name="Item_{{item['item_id']}}" value="{{item['item']}}">
+								<input
+									type="text"
+									class="Item"
+									id="Item_{{item['item_id']}}"
+									name="Item_{{item['item_id']}}"
+									value="{{item['item']}}"
+								/>
 							</td>
 						</tr>
 						{% endfor %}
@@ -60,7 +72,13 @@
 
 			<footer>
 				<div class="p-mensagens">
-					<h3>Items</h3>
+					<h3>
+						{% if erro %}
+						ERRO: {{ erro }}
+						{% else %}
+						Itens
+						{% endif %}
+					</h3>
 				</div>
 			</footer>
 		</form>

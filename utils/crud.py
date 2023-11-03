@@ -20,7 +20,7 @@ class CRUD:
     Operações CRUD do aplicativo "Nutri".
 
     Parâmetro:
-    - `caminho_do_banco` (str): o caminho do banco de dados.
+    - :param: caminho_do_banco (str): o caminho do banco de dados.
     """
 
     def __init__(self, caminho_do_banco: str):
@@ -42,49 +42,78 @@ class CRUD:
 #                              Função incluir_item                              #
 #-------------------------------------------------------------------------------#
 
-    # def incluir_item():
-        # Código a ser feito
+    def incluir_item(self, nome_do_item: str) -> None:
+        """
+        ### incluir_item
 
-#-------------------------------------------------------------------------------#
-#                              Função salvar_item                               #
-#-------------------------------------------------------------------------------#
+        Inclui o item especificado no banco de dados.
 
-    def salvar_item(self, formulario: dict) -> None:
+        #### Parâmetros:
+        - :param: nome_do_item (str): o nome do item a ser criado.
+        """
+
         conn = sqlite3.connect(self.db_path)
         cur  = conn.cursor()
 
-        for campo in formulario:
+        sql = f"""
+        INSERT
+        INTO    Item
+        (Item)
+        VALUES  ("{nome_do_item}")
+        """
 
-            if campo[0:17] == "CheckboxSeleciona":
+        cur.execute(sql)
+        conn.commit()
 
-                sql = f"""
-                UPDATE  Item
-                SET     Item    = "{formulario["Item_" + campo[18:20]]}"
-                WHERE   ItemID  = {campo[18:20]}
-                """
+#-------------------------------------------------------------------------------#
+#                           Função atualizar_item                               #
+#-------------------------------------------------------------------------------#
 
-                cur.execute(sql)
-                conn.commit()
+    def atualizar_item(self, item_id: int, novo_nome: str) -> None:
+        """
+        ### atualizar_item
+
+        Exclui os itens selecionados.
+
+        #### Parâmetros:
+        - :param: item_id (int): o id do item a ser atualizado.
+        - :param: novo_nome (str): o novo nome do item.
+        """
+
+        conn = sqlite3.connect(self.db_path)
+        cur  = conn.cursor()
+
+        sql = f"""
+        UPDATE  Item
+        SET     Item    = "{novo_nome}"
+        WHERE   ItemID  = {item_id}
+        """
+
+        cur.execute(sql)
+        conn.commit()
 
 #-------------------------------------------------------------------------------#
 #                             Função excluir_item                               #
 #-------------------------------------------------------------------------------#
 
+    def excluir_item(self, item_id: int) -> None:
+        """
+        ### excluir_item
 
-    def excluir_item(self, formulario: dict) -> None:
+        Exclui os itens selecionados.
+
+        #### Parâmetros:
+        - :param: item_id (int): o id do item a ser excluído.
+        """
 
         conn = sqlite3.connect(self.db_path)
         cur  = conn.cursor()
 
-        for campo in formulario:
+        sql = f"""
+        DELETE
+        FROM    Item
+        WHERE   ItemID = {item_id}
+        """
 
-            if campo[0:17] == "CheckboxSeleciona":
-
-                sql = f"""
-                DELETE
-                FROM    Item
-                WHERE   ItemID = {campo[18:20]}
-                """
-
-                cur.execute(sql)
-                conn.commit()
+        cur.execute(sql)
+        conn.commit()

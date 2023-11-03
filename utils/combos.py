@@ -22,7 +22,7 @@ class Combos:
     Funções utilitárias que montam combos/filtros do aplicativo "Nutri".
 
     Parâmetros:
-    - `caminho_do_banco` (str): o caminho do banco de dados.
+    - :param: caminho_do_banco (str): o caminho do banco de dados.
     """
 
     def __init__(self, caminho_do_banco: str):
@@ -41,7 +41,7 @@ class Combos:
         Monta uma lista de dicionários para compor a combo de seleção dos pacientes.
 
         #### Parâmetros:
-        - `paciente_selecionado_id` (int): o ID do paciente selecionado.
+        - :param: paciente_selecionado_id (int): o ID do paciente selecionado.
 
         #### Retorna:
         - Uma lista de dicionários com todos os pacientes.
@@ -123,9 +123,9 @@ class Combos:
         Monta uma lista de dicionários para compor a seleção das datas.
 
         #### Parâmetros:
-        - `data_inicial_string_Ymd` (str): data inicial, em ano-mês-dia;
-        - `data_final_string_Ymd` (str): data final, em ano-mês-dia;
-        - `data_dia_string_Ymd` (str): dia escolhido, em ano-mês-dia;
+        - :param: data_inicial_string_Ymd (str): data inicial, em ano-mês-dia.
+        - :param: data_final_string_Ymd (str): data final, em ano-mês-dia.
+        - :param: data_dia_string_Ymd` (str): dia escolhido, em ano-mês-dia.
 
         #### Retorna:
         - Uma lista de dicionários com as datas calculadas.
@@ -205,7 +205,7 @@ class Combos:
         Monta uma lista de dicionários para compor a combo de seleção das refeições.
 
         #### Parâmetros:
-        - `refeicao_selecionada_id` (int): o ID da refeição selecionada.
+        - :param: refeicao_selecionada_id (int): o ID da refeição selecionada.
 
         #### Retorna:
         - Uma lista de dicionários com todas as refeições.
@@ -281,7 +281,7 @@ class Combos:
         Monta uma lista de dicionários para compor a combo de seleção dos itens.
 
         #### Parâmetros:
-        - `item_selecionado_id` (int): o ID do item selecionado.
+        - :param: item_selecionado_id (int): o ID do item selecionado.
 
         #### Retorna:
         - Uma lista de dicionários com todos os itens.
@@ -360,7 +360,7 @@ class Combos:
         Monta uma lista de dicionários para compor a combo de seleção das unidades.
 
         #### Parâmetros:
-        - `unidade_selecionada_id` (int): o ID da unidade selecionada.
+        - :param: unidade_selecionada_id (int): o ID da unidade selecionada.
 
         #### Retorna:
         - Uma lista de dicionários com todos as unidades.

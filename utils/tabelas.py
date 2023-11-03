@@ -20,7 +20,7 @@ class Tabelas:
     Funções utilitárias que montam as tabelas do aplicativo "Nutri".
 
     Parâmetros:
-    - `caminho_do_banco` (str): o caminho do banco de dados.
+    - :param: caminho_do_banco (str): o caminho do banco de dados.
     """
     def __init__(self, caminho_do_banco: str):
         self.db_path = caminho_do_banco
@@ -36,7 +36,7 @@ class Tabelas:
         Monta uma lista de dicionários para compor a tabela dos pacientes.
 
         #### Parâmetros:
-        - `paciente_selecionado_id` (int): o ID do paciente selecionado.
+        - :param: paciente_selecionado_id (int): o ID do paciente selecionado.
 
         #### Retorna:
         - Uma lista de dicionários com todos ou apenas o paciente selecionado.
@@ -99,14 +99,17 @@ class Tabelas:
 #                        Função montar_tabela_de_itens                          #
 #-------------------------------------------------------------------------------#
 
-    def montar_tabela_de_itens(self, item_selecionado_id: int) -> "list[dict]":
+    def montar_tabela_de_itens(
+        self, item_selecionado_id: int, incluir_item: bool
+    ) -> "list[dict]":
         """
         ### montar_tabela_de_itens
 
         Monta uma lista de dicionários para compor a tabela dos itens.
 
         #### Parâmetros:
-        - `paciente_selecionado_id` (int): o ID do item selecionado.
+        - :param: item_selecionado_id (int): o ID do item selecionado.
+        - :param: incluir_item (bool): se um item está sendo incluído.
 
         #### Retorna:
         - Uma lista de dicionários com todos ou apenas o item selecionado.
@@ -137,20 +140,27 @@ class Tabelas:
 
         # Monta a lista de dicionários
         dict_itens = {
-            "linha"     : None,
             "item_id"   : None,
-            "item"      : None
+            "item"      : None,
+            "checked"   : None
         }
 
         lista_itens = []
         rows        = cur.fetchall()
 
-        for i, row in enumerate(rows):
+        if incluir_item:
+            lista_itens.append({
+                "item_id": 0,
+                "item": "",
+                "checked": True
+            })
+
+        for row in rows:
 
             dict_itens = {
-                "linha"     : i + 1,
                 "item_id"   : row[0],
-                "item"      : row[1]
+                "item"      : row[1],
+                "checked"   : False
             }
 
             lista_itens.append(dict_itens)
@@ -168,7 +178,7 @@ class Tabelas:
         Monta uma lista de dicionários para compor a tabela das consultas.
 
         #### Parâmetros:
-        - `paciente_selecionado_id` (int): o ID do paciente selecionado.
+        - :param: paciente_selecionado_id (int): o ID do paciente selecionado.
 
         #### Retorna:
         - Uma lista de dicionários com todas as consultas do paciente selecionado.
@@ -232,8 +242,8 @@ class Tabelas:
         Monta uma lista de dicionários para compor a tabela do plano diário.
 
         #### Parâmetros:
-        - `paciente_selecionado_id` (int): o ID do paciente selecionado;
-        - `data_dia_string_Ymd` (str): a data do dia do plano diário, em ano-mês-dia.
+        - :param: paciente_selecionado_id (int): o ID do paciente selecionado.
+        - :param: data_dia_string_Ymd (str): a data do dia do plano diário, em ano-mês-dia.
 
         #### Retorna:
         - Uma lista de dicionários com o plano diário do dia especificado para o
