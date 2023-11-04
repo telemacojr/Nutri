@@ -127,14 +127,22 @@ def pagina_dos_itens():
             # Se estiver incluindo um item novo
             if "CheckboxSeleciona_0" in formulario:
                 if formulario["Item_0"]:
-                    crud.incluir_item(formulario["Item_0"])
+                    success = crud.incluir_item(formulario["Item_0"])
 
-                    return render_template(
-                        "Item.html",
-                        combo_itens = combos.montar_combo_dos_itens(0),
-                        itens       = tabelas.montar_tabela_de_itens(0, False),
-                        mensagem    = "Item incluído com sucesso!"
-                    )
+                    if success:
+                        return render_template(
+                            "Item.html",
+                            combo_itens = combos.montar_combo_dos_itens(0),
+                            itens       = tabelas.montar_tabela_de_itens(0, False),
+                            mensagem    = "Item incluído com sucesso!"
+                        )
+                    else:
+                        return render_template(
+                            "Item.html",
+                            combo_itens = combos.montar_combo_dos_itens(0),
+                            itens       = tabelas.montar_tabela_de_itens(0, True),
+                            mensagem    = "Erro: item com esse nome já existe. Digite outro nome."
+                        )
                 else:
                     return render_template(
                         "Item.html",

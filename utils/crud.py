@@ -42,7 +42,7 @@ class CRUD:
 #                              Função incluir_item                              #
 #-------------------------------------------------------------------------------#
 
-    def incluir_item(self, nome_do_item: str) -> None:
+    def incluir_item(self, nome_do_item: str) -> bool:
         """
         ### incluir_item
 
@@ -50,10 +50,26 @@ class CRUD:
 
         #### Parâmetros:
         - :param: nome_do_item (str): o nome do item a ser criado.
+
+        #### Retorna:
+        - True: se o item foi adicionado com sucesso.
+        - False: se um item já existe e, portanto, o item não pôde ser adicionado.
         """
 
         conn = sqlite3.connect(self.db_path)
         cur  = conn.cursor()
+
+        sql = f"""
+        SELECT  *
+        FROM    Item
+        WHERE   Item = "{nome_do_item}"
+        """
+
+        cur.execute(sql)
+        item = cur.fetchall()
+
+        if item:
+            return False
 
         sql = f"""
         INSERT
@@ -64,6 +80,8 @@ class CRUD:
 
         cur.execute(sql)
         conn.commit()
+
+        return True
 
 #-------------------------------------------------------------------------------#
 #                           Função atualizar_item                               #
