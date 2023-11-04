@@ -1,82 +1,114 @@
-<!DOCTYPE html>
-<html lang="pt">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Nutri - Consultas</title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='nutri.css') }}" />
-	</head>
-	<body>
-		<form method="post">
-			<header>
-				<h2>Consultas do Paciente</h2>
+{% extends "base.html" %}
 
-				<div id="div-filtro-pacientes">
-					<div id="div-filtros">
-						<label for="FiltroPaciente" id="LabelPaciente" name="LabelPaciente">
-							Paciente:
-						</label>
+{% block title %} Consultas | Nutri {% endblock %}
 
-						<select name="ComboPaciente" id="FiltroPaciente">
-							{% for paciente in combo_pacientes %}
-							<option value="{{ paciente['paciente_id'] }}" {% if paciente['selected'] %} selected {% endif %}>{{ paciente['paciente'] }}</option>
-							{% endfor %}
-						</select>
-					</div>
+{% block content %}
 
-					<div id="div-botoes">
-						<button type="submit" id="Pesquisar"     name="Pesquisar">Pesquisar</button>
-						<button type="submit" id="Incluir"       name="Incluir">Incluir</button>
-						<button type="submit" id="Salvar"        name="Salvar">Salvar</button>
-						<button type="submit" id="Excluir"       name="Excluir">Excluir</button>
-						<button type="submit" id="ExportarExcel" name="ExportarExcel">Exportar Excel</button>
+<form method="post" class="page flex flex-col bg-white text-black text-base font-sans border border-blue-300 rounded-2xl pr-2 mt-3 h-[calc(100%-1.5rem)] w-[48rem]">
+	<h2 class="text-white bg-blue-950 text-center font-bold m-2 mr-0 py-1 rounded-2xl">Consultas do Paciente</h2>
 
-						<a class="link" href="/pacientes?paciente_id={{ paciente_id }}">Voltar</a>
-					</div>
-				</div>
+	<div class="bg-blue-100 border border-blue-300 ml-2 p-4 rounded-2xl flex flex-col">
+		<div class="flex items-center pl-1">
+			<label for="FiltroPaciente" class="mr-1">
+				Paciente:
+			</label>
 
-			</header>
+			<select name="ComboPaciente" id="FiltroPaciente" class="w-52 py-1 px-1 border border-blue-600 bg-white rounded-sm hover:text-blue-900 hover:bg-blue-50">
+				{% for paciente in combo_pacientes %}
+				<option value="{{ paciente['paciente_id'] }}" {% if paciente['selected'] %} selected {% endif %}>{{ paciente['paciente'] }}</option>
+				{% endfor %}
+			</select>
+		</div>
 
-			<div id="div-pacientes">
-				<table>
-					<thead>
-						<tr>
-							<th><input type="checkbox" id="CheckboxTodos" name="CheckboxTodos">
-							<th>Data</th>
-							<th>IMC</th>
-							<th>CC</th>
-							<th>G%</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for consulta in consultas %}
-						<tr>
-							<td>
-								<input type="checkbox" class="CheckboxSeleciona" id="CheckboxSeleciona_{{consulta['data']}}" name="CheckboxSeleciona_{{consulta['data']}}">
-							</td>
-							<td>
-								<input type="date" class="Data" id="Data_{{consulta['data']}}" name="Data_{{consulta['data']}}" value="{{consulta['data']}}">
-							</td>
-							<td>
-								<input type="number" class="IMC" id="IMC_{{consulta['data']}}" name="IMC_{{consulta['data']}}" value="{{consulta['imc']}}">
-							</td>
-							<td>
-								<input type="number" class="CC" id="CC_{{consulta['data']}}" name="CC_{{consulta['data']}}" value="{{consulta['cc']}}">
-							</td>
-							<td>
-								<input type="number" class="G" id="G_{{consulta['data']}}" name="G_{{consulta['data']}}" value="{{consulta['g']}}">
-							</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
+		<div class="flex flex-start items-center flex-wrap mt-5">
+			<input type="submit" name="Pesquisar" value="Pesquisar" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<input type="submit" name="Incluir" value="Incluir" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<input type="submit" name="Salvar" value="Salvar" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<input type="submit" name="Excluir" value="Excluir" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<input type="submit" name="ExportarExcel" value="Exportar Excel" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
 
-			<footer>
-				<div class="p-mensagens">
-					<h3>Consultas</h3>
-				</div>
-			</footer>
-		</form>
-	</body>
-</html>
+			<a href="/pacientes?paciente_id={{ paciente_id }}" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer">Voltar</a>
+		</div>
+	</div>
+
+	<div class="bg-slate-200 border border-blue-300 my-2 ml-2 p-4 overflow-auto rounded-2xl flex-grow">
+		<table class="w-full">
+			<thead>
+				<tr class="bg-white hover:bg-slate-100">
+					<th class="text-white bg-blue-950 py-1 px-3">
+						<input
+							type="checkbox"
+							id="CheckboxTodos"
+							name="CheckboxTodos"
+							class="text-white bg-blue-950 px-3 py-1 rounded-2xl accent-red-600"
+						/>
+					</th>
+					<th class="text-white bg-blue-950 py-1 px-3">Data</th>
+					<th class="text-white bg-blue-950 py-1 px-3">IMC</th>
+					<th class="text-white bg-blue-950 py-1 px-3">CC</th>
+					<th class="text-white bg-blue-950 py-1 px-3">G%</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for consulta in consultas %}
+				<tr class="bg-white hover:bg-slate-100">
+					<td class="py-1 px-2 text-center">
+						<input
+							type="checkbox"
+							class="CheckboxSeleciona text-white bg-blue-950 px-3 py-1 rounded-2xl accent-red-600"
+							id="CheckboxSeleciona_{{consulta['data']}}"
+							name="CheckboxSeleciona_{{consulta['data']}}"
+						/>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<input
+							type="date"
+							class="text-blue-950 bg-white py-1 px-1 border border-blue-600 rounded hover:text-blue-900 hover:bg-blue-50 focus:text-black focus:bg-slate-100 w-full"
+							id="Data_{{consulta['data']}}"
+							name="Data_{{consulta['data']}}"
+							value="{{consulta['data']}}"
+						/>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<input
+							type="number"
+							class="text-blue-950 bg-white py-1 px-1 border border-blue-600 rounded hover:text-blue-900 hover:bg-blue-50 focus:text-black focus:bg-slate-100 w-full"
+							id="IMC_{{consulta['data']}}"
+							name="IMC_{{consulta['data']}}"
+							value="{{consulta['imc']}}"
+						/>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<input
+							type="number"
+							class="text-blue-950 bg-white py-1 px-1 border border-blue-600 rounded hover:text-blue-900 hover:bg-blue-50 focus:text-black focus:bg-slate-100 w-full"
+							id="CC_{{consulta['data']}}"
+							name="CC_{{consulta['data']}}"
+							value="{{consulta['cc']}}"
+						/>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<input
+							type="number"
+							class="text-blue-950 bg-white py-1 px-1 border border-blue-600 rounded hover:text-blue-900 hover:bg-blue-50 focus:text-black focus:bg-slate-100 w-full"
+							id="G_{{consulta['data']}}"
+							name="G_{{consulta['data']}}"
+							value="{{consulta['g']}}"
+						/>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<h3 class="text-white bg-blue-950 text-sm m-2 mt-0 mr-0 pl-3 pt-1 pb-1 border rounded-2xl">
+		{% if mensagem %}
+		{{ mensagem }}
+		{% else %}
+		Consultas
+		{% endif %}
+	</h3>
+</form>
+
+{% endblock %}

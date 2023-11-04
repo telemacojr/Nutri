@@ -1,84 +1,117 @@
-<!DOCTYPE html>
-<html lang="pt">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Nutri - Paciente</title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='nutri.css') }}" />
-	</head>
-	<body>
-		<form method="post">
-			<header>
-				<h2>Dados dos Pacientes</h2>
+{% extends "base.html" %}
 
-				<div id="div-filtro-pacientes">
-					<div id="div-filtros">
-						<label for="FiltroPaciente" id="LabelPaciente" name="LabelPaciente">
-							Paciente:
-						</label>
+{% block title %} Paciente | Nutri {% endblock %}
 
-						<select name="ComboPaciente" id="FiltroPaciente">
-							{% for paciente in combo_pacientes %}
-							<option value="{{ paciente['paciente_id'] }}" {% if paciente['selected'] %} selected {% endif %}>{{ paciente['paciente'] }}</option>
-							{% endfor %}
-						</select>
-					</div>
+{% block content %}
 
-					<div id="div-botoes">
-						<button type="submit" id="Pesquisar" 	name="Pesquisar">Pesquisar</button>
-						<button type="submit" id="Incluir" 		name="Incluir"	>Incluir</button>
-						<button type="submit" id="Salvar" 		name="Salvar"	>Salvar</button>
-						<button type="submit" id="Excluir" 		name="Excluir"	>Excluir</button>
+<form method="post" class="page flex flex-col bg-white text-black text-base font-sans border border-blue-300 rounded-2xl pr-2 mt-3 h-[calc(100%-1.5rem)] w-[48rem]">
+	<h2 class="text-white bg-blue-950 text-center font-bold m-2 mr-0 py-1 rounded-2xl">Dados dos Pacientes</h2>
 
-						<a class="link" href="/consultas?paciente_id={{ paciente_id }}" 	id="Consultas">Consultas</a>
-						<a class="link" href="/plano_diario?paciente_id={{ paciente_id }}"  id="PlanoDiario">Plano Diário</a>
+	<div class="bg-blue-100 border border-blue-300 ml-2 p-4 rounded-2xl flex flex-col">
+		<div class="flex items-center pl-1">
+			<label for="FiltroPaciente" class="mr-1">
+				Paciente:
+			</label>
 
-						<button type="submit" id="ExportarExcel">Exportar Excel</button>
-						<a class="link" href="/" id="Voltar">Voltar</a>
-					</div>
-				</div>
-			</header>
+			<select name="ComboPaciente" id="FiltroPaciente" class="w-52 py-1 px-1 border border-blue-600 bg-white rounded-sm hover:text-blue-900 hover:bg-blue-50">
+				{% for paciente in combo_pacientes %}
+				<option value="{{ paciente['paciente_id'] }}" {% if paciente['selected'] %} selected {% endif %}>{{ paciente['paciente'] }}</option>
+				{% endfor %}
+			</select>
+		</div>
 
-			<div id="div-pacientes">
-				<table>
-					<thead>
-						<tr>
-							<th><input type="checkbox" id="CheckboxTodos" name="CheckboxTodos">
-							<th>Paciente</th>
-							<th>Data de Nascimento</th>
-							<th>Telefone</th>
-							<th>Email</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for paciente in pacientes %}
-						<tr>
-							<td>
-								<input type="checkbox" class="CheckboxSeleciona" id="CheckboxSeleciona_{{paciente['paciente_id']}}" name="CheckboxSeleciona_{{paciente['paciente_id']}}">
-							</td>
-							<td>
-								<input type="text" class="Paciente" id="Paciente_{{paciente['paciente_id']}}" name="Paciente_{{paciente['paciente_id']}}" value="{{paciente['paciente']}}">
-							</td>
-							<td>
-								<input type="date" class="DataNascimento" id="DataNascimento_{{paciente['paciente_id']}}" name="DataNascimento_{{paciente['paciente_id']}}" value="{{paciente['data_de_nascimento']}}">
-							</td>
-							<td>
-								<input type="text" class="Telefone" id="Telefone_{{paciente['paciente_id']}}" name="Telefone_{{paciente['paciente_id']}}" value="{{paciente['telefone']}}">
-							</td>
-							<td>
-								<input type="text" class="Email" id="Email_{{paciente['paciente_id']}}" name="Email_{{paciente['paciente_id']}}" value="{{paciente['email']}}">
-							</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
+		<div class="flex flex-start items-center flex-wrap mt-5">
+			<input type="submit" name="Pesquisar" value="Pesquisar" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<input type="submit" name="Incluir"	 value="Incluir" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<input type="submit" name="Salvar"	 value="Salvar" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<input type="submit" name="Excluir"	 value="Excluir" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
 
-			<footer>
-				<div class="p-mensagens">
-					<h3>Pacientes</h3>
-				</div>
-			</footer>
-		</form>
-	</body>
-</html>
+			<a class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" href="/consultas?paciente_id={{ paciente_id }}" 	id="Consultas">Consultas</a>
+			<a class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" href="/plano_diario?paciente_id={{ paciente_id }}"  id="PlanoDiario">Plano Diário</a>
+
+			<input type="submit" id="ExportarExcel" value="Exportar Excel" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<a class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" href="/" id="Voltar">Voltar</a>
+		</div>
+	</div>
+
+	<div class="bg-slate-200 border border-blue-300 my-2 ml-2 p-4 overflow-auto rounded-2xl flex-grow">
+		<table class="w-full">
+			<thead>
+				<tr class="bg-white hover:bg-slate-100">
+					<th class="text-white bg-blue-950 py-1 px-3">
+						<input
+							type="checkbox"
+							id="CheckboxTodos"
+							name="CheckboxTodos"
+							class="text-white bg-blue-950 px-3 py-1 rounded-2xl accent-red-600"
+						/>
+					</th>
+					<th class="text-white bg-blue-950 py-1 px-3">Paciente</th>
+					<th class="text-white bg-blue-950 py-1 px-3">Data de Nascimento</th>
+					<th class="text-white bg-blue-950 py-1 px-3">Telefone</th>
+					<th class="text-white bg-blue-950 py-1 px-3">Email</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for paciente in pacientes %}
+				<tr class="bg-white hover:bg-slate-100">
+					<td class="py-1 px-2 text-center">
+						<input
+							type="checkbox"
+							class="CheckboxSeleciona text-white bg-blue-950 px-3 py-1 rounded-2xl accent-red-600"
+							id="CheckboxSeleciona_{{paciente['paciente_id']}}"
+							name="CheckboxSeleciona_{{paciente['paciente_id']}}"
+						/>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<input
+							type="text"
+							class="text-blue-950 bg-white py-1 px-1 border border-blue-600 rounded hover:text-blue-900 hover:bg-blue-50 focus:text-black focus:bg-slate-100 w-full"
+							id="Paciente_{{paciente['paciente_id']}}"
+							name="Paciente_{{paciente['paciente_id']}}"
+							value="{{paciente['paciente']}}"
+						/>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<input
+							type="date"
+							class="text-blue-950 bg-white py-1 px-1 border border-blue-600 rounded hover:text-blue-900 hover:bg-blue-50 focus:text-black focus:bg-slate-100 w-full"
+							id="DataNascimento_{{paciente['paciente_id']}}"
+							name="DataNascimento_{{paciente['paciente_id']}}"
+							value="{{paciente['data_de_nascimento']}}"
+						/>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<input
+							type="text"
+							class="text-blue-950 bg-white py-1 px-1 border border-blue-600 rounded hover:text-blue-900 hover:bg-blue-50 focus:text-black focus:bg-slate-100 w-full"
+							id="Telefone_{{paciente['paciente_id']}}"
+							name="Telefone_{{paciente['paciente_id']}}"
+							value="{{paciente['telefone']}}"
+						/>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<input
+							type="email"
+							cclass="text-blue-950 bg-white py-1 px-1 border border-blue-600 rounded hover:text-blue-900 hover:bg-blue-50 focus:text-black focus:bg-slate-100 w-full"
+							id="Email_{{paciente['paciente_id']}}"
+							name="Email_{{paciente['paciente_id']}}"
+							value="{{paciente['email']}}"
+						/>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<h3 class="text-white bg-blue-950 text-sm m-2 mt-0 mr-0 pl-3 pt-1 pb-1 border rounded-2xl">
+		{% if mensagem %}
+		{{ mensagem }}
+		{% else %}
+		Pacientes
+		{% endif %}
+	</h3>
+</form>
+
+{% endblock %}

@@ -1,86 +1,83 @@
-<!DOCTYPE html>
-<html lang="pt">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Nutri - Item</title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='nutri.css') }}" />
-	</head>
-	<body>
-		<form method="post">
-			<header>
-				<h2>Dados dos Itens</h2>
+{% extends "base.html" %}
 
-				<div id="div-filtro-pacientes">
-					<div id="div-filtros">
-						<label for="FiltroItem" id="LabelItem" name="LabelItem">
-							Item:
-						</label>
+{% block title %} Item | Nutri {% endblock %}
 
-						<select name="ComboItem" id="FiltroItem">
-							{% for item in combo_itens %}
-							<option value="{{ item['item_id'] }}" {% if item['selected'] %} selected {% endif %}>{{ item['item'] }}</option>
-							{% endfor %}
-						</select>
-					</div>
+{% block content %}
 
-					<div id="div-botoes">
-						<input type="submit" id="Pesquisar"     name="Pesquisar"     value="Pesquisar" />
-						<input type="submit" id="Incluir"       name="Incluir"       value="Incluir" />
-						<input type="submit" id="Salvar"        name="Salvar"        value="Salvar" />
-						<input type="submit" id="Excluir"       name="Excluir"       value="Excluir" />
-						<input type="submit" id="ExportarExcel" name="ExportarExcel" value="Exportar Excel" />
-						<a class="link" href="/">Voltar</a>
-					</div>
-				</div>
-			</header>
+<form method="post" class="page flex flex-col bg-white text-black text-base font-sans border border-blue-300 rounded-2xl pr-2 mt-3 h-[calc(100%-1.5rem)] w-[48rem]">
+	<h2 class="text-white bg-blue-950 text-center font-bold m-2 mr-0 py-1 rounded-2xl">Dados dos Itens</h2>
 
-			<div id="div-pacientes">
-				<table>
-					<thead>
-						<tr>
-							<th><input type="checkbox" id="CheckboxTodos" name="CheckboxTodos"></th>
-							<th>Item</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for item in itens %}
-						<tr>
-							<td>
-								<input
-									type="checkbox"
-									class="CheckboxSeleciona"
-									id="CheckboxSeleciona_{{item['item_id']}}"
-									name="CheckboxSeleciona_{{item['item_id']}}"
-									{% if item['checked'] %} checked {% endif %}
-								/>
-							</td>
-							<td>
-								<input
-									type="text"
-									class="Item"
-									id="Item_{{item['item_id']}}"
-									name="Item_{{item['item_id']}}"
-									value="{{item['item']}}"
-								/>
-							</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
+	<div class="bg-blue-100 border border-blue-300 ml-2 p-4 rounded-2xl flex flex-col">
+		<div class="flex items-center pl-1">
+			<label for="FiltroItem" class="mr-1">
+				Item:
+			</label>
 
-			<footer>
-				<div class="p-mensagens">
-					<h3>
-						{% if erro %}
-						ERRO: {{ erro }}
-						{% else %}
-						Itens
-						{% endif %}
-					</h3>
-				</div>
-			</footer>
-		</form>
-	</body>
-</html>
+			<select name="ComboItem" id="FiltroItem" class="w-52 py-1 px-1 border border-blue-600 bg-white rounded-sm hover:text-blue-900 hover:bg-blue-50">
+				{% for item in combo_itens %}
+				<option value="{{ item['item_id'] }}" {% if item['selected'] %} selected {% endif %}>{{ item['item'] }}</option>
+				{% endfor %}
+			</select>
+		</div>
+
+		<div class="flex flex-start items-center flex-wrap mt-5">
+			<input class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" type="submit" name="Pesquisar"     value="Pesquisar" />
+			<input class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" type="submit" name="Incluir"       value="Incluir" />
+			<input class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" type="submit" name="Salvar"        value="Salvar" />
+			<input class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" type="submit" name="Excluir"       value="Excluir" />
+			<input class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" type="submit" name="ExportarExcel" value="Exportar Excel" />
+			<a class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white" href="/">Voltar</a>
+		</div>
+	</div>
+
+	<div class="bg-slate-200 border border-blue-300 my-2 ml-2 p-4 overflow-auto rounded-2xl flex-grow">
+		<table class="w-full">
+			<thead>
+				<tr class="bg-white hover:bg-slate-100">
+					<th class="text-white bg-blue-950 py-1 px-3">
+						<input
+							type="checkbox"
+							id="CheckboxTodos"
+							class="text-white bg-blue-950 px-3 py-1 rounded-2xl accent-red-600"
+						/>
+					</th>
+					<th class="text-white bg-blue-950 py-1 px-3">Item</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in itens %}
+				<tr class="bg-white hover:bg-slate-100">
+					<td class="py-1 px-2 text-center">
+						<input
+							type="checkbox"
+							class="CheckboxSeleciona text-white bg-blue-950 px-3 py-1 rounded-2xl accent-red-600"
+							id="CheckboxSeleciona_{{item['item_id']}}"
+							name="CheckboxSeleciona_{{item['item_id']}}"
+							{% if item['checked'] %} checked {% endif %}
+						/>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<input
+							type="text"
+							class="text-blue-950 bg-white py-1 px-1 border border-blue-600 rounded hover:text-blue-900 hover:bg-blue-50 focus:text-black focus:bg-slate-100 w-full"
+							id="Item_{{item['item_id']}}"
+							name="Item_{{item['item_id']}}"
+							value="{{item['item']}}"
+						/>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<h3 class="text-white bg-blue-950 text-sm m-2 mt-0 mr-0 pl-3 pt-1 pb-1 border rounded-2xl">
+		{% if mensagem %}
+		{{ mensagem }}
+		{% else %}
+		Itens
+		{% endif %}
+	</h3>
+</form>
+
+{% endblock %}

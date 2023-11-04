@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+::-webkit-scrollbar {
+    background-color: rgb(147, 197, 253);
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgb(23, 37, 84);
+    border-radius: 1rem;
+}
+
+@media screen and (max-width: 50rem) {
+    .page {
+        width: 100%;
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+}

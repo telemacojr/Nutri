@@ -1,34 +1,27 @@
-<!DOCTYPE html>
-<html lang="pt">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Página inicial | Nutri</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='nutri.css') }}" />
-    </head>
-    <body>
-        <header>
-            <h2>Nutri</h2>
+{% extends "base.html" %}
 
-            <div id="div-filtro-pacientes">
-                <p>Seja bem-vindo ao Nutri, um aplicativo que organizará a sua rotina neste momento de reeducação alimentar!</p>
+{% block title %} Página Inicial | Nutri {% endblock %}
 
-                <div id="div-botoes">
-                    <a class="link" href="/pacientes">Pacientes</a>
-                    <a class="link" href="/itens"    >Itens    </a>
-                    <!-- <input type="submit" id="BotaoUnidadeMedida" name="BotaoUnidadeMedida" value="Unidades de Medida" /> -->
-                    <!-- <input type="submit" id="BotaoCardapio"      name="BotaoCardapio"      value="Cardápios" /> -->
-                    <!-- <input type="submit" id="BotaoPlano"         name="BotaoPlano"         value="Planos" /> -->
-                    <!-- <input type="submit" id="BotaoReceita"       name="BotaoReceita"       value="Receitas" /> -->
-                    <!-- <input type="submit" id="BotaoSubstituicao"  name="BotaoSubstituicao"  value="Substituições" /> -->
-                </div>
-            </div>
-        </header>
+{% block content %}
 
-        <footer>
-            <div class="p-mensagens">
-                <h3>&copy; 2023 Telêmaco Queiroz Júnior | Henrique Pureza Queiroz</h3>
-            </div>
-        </footer>
-    </body>
-</html>
+<div class="page flex flex-col bg-white text-black text-base font-sans absolute border border-blue-300 rounded-2xl pr-2 mt-3 w-[48rem]">
+    <h2 class="text-white bg-blue-950 text-base font-sans text-center font-bold m-2 mr-0 py-1 rounded-2xl">Nutri</h2>
+
+    <div class="bg-blue-100 border border-blue-300 ml-2 p-4 rounded-2xl flex content-start flex-col">
+        <p class="text-sm text-justify m-5">Seja bem-vindo ao Nutri, um aplicativo que organizará a sua rotina neste momento de reeducação alimentar!</p>
+
+        <div class="flex flex-start items-center mt-5">
+            <a class="text-white bg-blue-950 py-1 px-3 ml-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white" href="/pacientes">Pacientes</a>
+            <a class="text-white bg-blue-950 py-1 px-3 ml-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white" href="/itens"    >Itens    </a>
+            <!-- <input type="submit" id="BotaoUnidadeMedida" name="BotaoUnidadeMedida" value="Unidades de Medida" /> -->
+            <!-- <input type="submit" id="BotaoCardapio"      name="BotaoCardapio"      value="Cardápios" /> -->
+            <!-- <input type="submit" id="BotaoPlano"         name="BotaoPlano"         value="Planos" /> -->
+            <!-- <input type="submit" id="BotaoReceita"       name="BotaoReceita"       value="Receitas" /> -->
+            <!-- <input type="submit" id="BotaoSubstituicao"  name="BotaoSubstituicao"  value="Substituições" /> -->
+        </div>
+    </div>
+
+    <h3 class="text-white bg-blue-950 text-sm font-sans text-left font-normal m-2 mr-0 pl-3 pt-1 pb-1 border rounded-2xl">&copy; 2023 Telêmaco Queiroz Júnior | Henrique Pureza Queiroz</h3>
+</div>
+
+{% endblock %}

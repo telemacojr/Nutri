@@ -1,146 +1,155 @@
-<!DOCTYPE html>
-<html lang="pt">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width=1.0" />
-		<title>Nutri - Plano Diário</title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='nutri.css') }}" />
-	</head>
-	<body>
-		<form method="post">
-			<header>
-				<h2>Plano Diário</h2>
+{% extends "base.html" %}
 
-				<div id="div-filtro-pacientes">
-					<div id="div-filtros">
-						<label for="FiltroPaciente" id="LabelPaciente" name="LabelPaciente">
-							Paciente:
-						</label>
+{% block title %} Plano Diário | Nutri {% endblock %}
 
-						<select name="FiltroPaciente" id="FiltroPaciente">
-							{% if filtro_pacientes %}
-								{% for filtro_paciente in filtro_pacientes %}
-								<option value="{{filtro_paciente['paciente_id']}}" {% if filtro_paciente['selected'] %} selected {% endif %}>{{filtro_paciente['paciente']}}</option>
-								{% endfor %}
-							{% endif %}
-						</select>
+{% block content %}
 
-						<label for="FiltroDataNascimento" id="LabelDataInicial"  name="LabelDataInicial">
-							Data Inicial:
-						</label>
-						<input type="date"                id="FiltroDataInicial" name="FiltroDataInicial" value="{{filtro_data_inicial}}">
+<form method="post" class="page flex flex-col bg-white text-black text-base font-sans border border-blue-300 rounded-2xl pr-2 mt-3 h-[calc(100%-1.5rem)] w-[48rem]">
+	<h2 class="text-white bg-blue-950 text-center font-bold m-2 mr-0 py-1 rounded-2xl">Plano Diário</h2>
 
-						<label for="FiltroDataNascimento" id="LabelDataFinal"    name="LabelDataFinal">
-							Data Final:
-						</label>
-						<input type="date"                id="FiltroDataFinal"   name="FiltroDataFinal"   value="{{filtro_data_final}}">
-					</div>
-
-					<div id="div-botoes">
-						<input type="submit" id="BotaoPesquisar"     name="BotaoPesquisar"     value="Pesquisar" />
-						<input type="submit" id="BotaoIncluir"       name="BotaoIncluir"       value="Incluir" />
-						<input type="submit" id="BotaoSalvar"        name="BotaoSalvar"        value="Salvar" />
-						<input type="submit" id="BotaoExcluir"       name="BotaoExcluir"       value="Excluir" />
-						<input type="submit" id="BotaoCopiar"        name="BotaoCopiar"        value="Copiar" />
-						<input type="submit" id="BotaoCopiarPeriodo" name="BotaoCopiarPeriodo" value="Copiar Período" />
-						<input type="submit" id="BotaoExportarExcel" name="BotaoExportarExcel" value="Exportar Excel" />
-						<a class="link" href="/pacientes?paciente_id={{ paciente_id }}" id="Voltar">Voltar</a>
-					</div>
-
-					<div id="div-dia-plano">
-						<label for="FiltroDia" id="LabelDia" name="LabelDia">
-							Dia:
-						</label>
-						<select name="FiltroDia" id="FiltroDia">
-							{% for filtro_dia in filtro_dias %}
-							<option value="{{filtro_dia['dia']}}"  {% if filtro_dia['selected'] %} selected {% endif %}>{{filtro_dia['dia']}}</option>
-							{% endfor %}
-						</select>
-					</div>
-				</div>
-			</header>
-
-			<div id="div-pacientes">
-				<table>
-					<thead>
-						<tr>
-							<th><input type="checkbox" id="CheckboxTodos" name="CheckboxTodos">
-							<th>Refeição</th>
-							<th>Opção</th>
-							<th>Item</th>
-							<th>Quantidade</th>
-							<th>Unidade</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for plano_diario in planos_diarios %}
-						<tr>
-							<td>
-								<input type="checkbox" class="CheckboxSeleciona" id="CheckboxSeleciona_{{plano_diario['id']}}" name="CheckboxSeleciona_{{plano_diario['id']}}">
-							</td>
-							<td>
-								<select name="Refeicao_{{plano_diario['id']}}" class="Refeicao" id="Refeicao_{{plano_diario['id']}}">
-									{% for refeicao in refeicoes %}
-									<option value="{{refeicao['refeicao_id']}}" {% if refeicao['refeicao'] == plano_diario['Refeicao']: %} selected {% endif %}>{{refeicao['refeicao']}}</option>
-									{% endfor %}
-								</select>
-							</td>
-							<td>
-								<select name="Opcao_{{plano_diario['id']}}" class="Opcao" id="Opcao_{{plano_diario['id']}}">
-									{% for opcao in opcoes %}
-									<option value="{{opcao['opcao_id']}}" {% if opcao['opcao'] == plano_diario['Opcao']: %} selected {% endif %}>{{opcao['opcao']}}</option>
-									{% endfor %}
-								</select>
-							</td>
-							<td>
-								<select name="Item_{{plano_diario['id']}}" class="Item" id="Item_{{plano_diario['id']}}">
-									{% for item in itens %}
-									<option value="{{item['item_id']}}" {% if item['item'] == plano_diario['Item']: %} selected {% endif %}>{{item['item']}}</option>
-									{% endfor %}
-								</select>
-							</td>
-							<td>
-								<input type="number" class="Quantidade" id="Quantidade_{{plano_diario['id']}}" name="Quantidade_{{plano_diario['id']}}" value="{{plano_diario['Quantidade']}}">
-							</td>
-							<td>
-								<select name="Unidade_{{plano_diario['id']}}" class="Unidade" id="Unidade_{{plano_diario['id']}}">
-									{% for unidade in unidades %}
-									<option value="{{unidade['unidade_id']}}" {% if unidade['unidade'] == plano_diario['Unidade']: %} selected {% endif %}>{{unidade['unidade']}}</option>
-									{% endfor %}
-								</select>
-							</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+	<div class="bg-blue-100 border border-blue-300 ml-2 p-4 rounded-2xl flex flex-col">
+		<div class="flex items-center flex-wrap pl-1">
+			<div class="mr-1 mb-1">
+				<label for="FiltroPaciente" class="mr-1">
+					Paciente:
+				</label>
+				<select name="FiltroPaciente" id="FiltroPaciente" class="w-48 py-1 px-1 border border-blue-600 bg-white rounded-sm hover:text-blue-900 hover:bg-blue-50">
+					{% for filtro_paciente in filtro_pacientes %}
+					<option value="{{filtro_paciente['paciente_id']}}" {% if filtro_paciente['selected'] %} selected {% endif %}>{{filtro_paciente['paciente']}}</option>
+					{% endfor %}
+				</select>
 			</div>
 
-			<footer>
-				<div class="p-mensagens">
-					<h3>Plano Diário</h3>
-				</div>
-			</footer>
-		</form>
+			<div class="mr-1 mb-1">
+				<label for="FiltroDataNascimento" class="mr-1">
+					Data Inicial:
+				</label>
+				<input
+					type="date"
+					id="FiltroDataInicial"
+					name="FiltroDataInicial"
+					value="{{filtro_data_inicial}}"
+					class="text-blue-950 bg-white py-1 px-1 border border-blue-600 rounded hover:text-blue-900 hover:bg-blue-50 focus:text-black focus:bg-slate-100 w-32"
+				/>
+			</div>
 
-		<script>
-			document.getElementById("CheckboxTodos").addEventListener
-				("click", () =>
-					{
-						document.querySelectorAll(".CheckboxSeleciona").forEach
-							(checkBox =>
-								{
-									if (document.getElementById("CheckboxTodos").checked)
-									{
-										checkBox.checked = true;
-									}
-									else
-									{
-										checkBox.checked = false;
-									}
-								}
-							);
-					}
-				);
-		</script>
-	</body>
-</html>
+			<div class="mb-1">
+				<label for="FiltroDataNascimento" class="mr-1">
+					Data Final:
+				</label>
+				<input
+					type="date"
+					id="FiltroDataFinal"
+					name="FiltroDataFinal"
+					value="{{filtro_data_final}}"
+					class="text-blue-950 bg-white py-1 px-1 border border-blue-600 rounded hover:text-blue-900 hover:bg-blue-50 focus:text-black focus:bg-slate-100 w-32"
+				/>
+			</div>
+		</div>
+
+		<div class="bg-blue-300 mt-2 ml-0 p-4 rounded-2xl w-60">
+			<label for="FiltroDia" name="LabelDia" class="mr-1">
+				Dia:
+			</label>
+			<select name="FiltroDia" id="FiltroDia" class="w-52 py-1 px-1 border border-blue-600 bg-white rounded-sm hover:text-blue-900 hover:bg-blue-50">
+				{% for filtro_dia in filtro_dias %}
+				<option value="{{filtro_dia['dia']}}"  {% if filtro_dia['selected'] %} selected {% endif %}>{{filtro_dia['dia']}}</option>
+				{% endfor %}
+			</select>
+		</div>
+
+		<div class="flex flex-start items-center flex-wrap mt-5">
+			<input type="submit" name="BotaoPesquisar"     value="Pesquisar" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<input type="submit" name="BotaoIncluir"       value="Incluir" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<input type="submit" name="BotaoSalvar"        value="Salvar" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<input type="submit" name="BotaoExcluir"       value="Excluir" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<input type="submit" name="BotaoCopiar"        value="Copiar" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<input type="submit" name="BotaoCopiarPeriodo" value="Copiar Período" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<input type="submit" name="BotaoExportarExcel" value="Exportar Excel" class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" />
+			<a class="text-white bg-blue-950 py-1 px-3 ml-1 mb-1 border border-blue-900 rounded-2xl transition-colors duration-1000 text-decoration-none text-sm hover:text-blue-900 hover:bg-white cursor-pointer" href="/pacientes?paciente_id={{ paciente_id }}" id="Voltar">Voltar</a>
+		</div>
+	</div>
+
+	<div class="bg-slate-200 border border-blue-300 my-2 ml-2 p-4 overflow-auto rounded-2xl flex-grow">
+		<table class="w-full">
+			<thead>
+				<tr class="bg-white hover:bg-slate-100">
+					<th class="text-white bg-blue-950 py-1 px-3">
+						<input
+							type="checkbox"
+							id="CheckboxTodos"
+							name="CheckboxTodos"
+							class="text-white bg-blue-950 px-3 py-1 rounded-2xl accent-red-600"
+						/>
+					</th>
+					<th class="text-white bg-blue-950 py-1 px-3">Refeição</th>
+					<th class="text-white bg-blue-950 py-1 px-3">Opção</th>
+					<th class="text-white bg-blue-950 py-1 px-3">Item</th>
+					<th class="text-white bg-blue-950 py-1 px-3">Quantidade</th>
+					<th class="text-white bg-blue-950 py-1 px-3">Unidade</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for plano_diario in planos_diarios %}
+				<tr class="bg-white hover:bg-slate-100">
+					<td class="py-1 px-2 text-center">
+						<input
+							type="checkbox"
+							class="CheckboxSeleciona text-white bg-blue-950 px-3 py-1 rounded-2xl accent-red-600"
+							id="CheckboxSeleciona_{{plano_diario['id']}}"
+							name="CheckboxSeleciona_{{plano_diario['id']}}"
+						/>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<select name="Refeicao_{{plano_diario['id']}}" class="w-52 py-1 px-1 border border-blue-600 bg-white rounded-sm hover:text-blue-900 hover:bg-blue-50" id="Refeicao_{{plano_diario['id']}}">
+							{% for refeicao in refeicoes %}
+							<option value="{{refeicao['refeicao_id']}}" {% if refeicao['refeicao'] == plano_diario['Refeicao']: %} selected {% endif %}>{{refeicao['refeicao']}}</option>
+							{% endfor %}
+						</select>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<select name="Opcao_{{plano_diario['id']}}" class="w-52 py-1 px-1 border border-blue-600 bg-white rounded-sm hover:text-blue-900 hover:bg-blue-50" id="Opcao_{{plano_diario['id']}}">
+							{% for opcao in opcoes %}
+							<option value="{{opcao['opcao_id']}}" {% if opcao['opcao'] == plano_diario['Opcao']: %} selected {% endif %}>{{opcao['opcao']}}</option>
+							{% endfor %}
+						</select>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<select name="Item_{{plano_diario['id']}}" class="w-52 py-1 px-1 border border-blue-600 bg-white rounded-sm hover:text-blue-900 hover:bg-blue-50" id="Item_{{plano_diario['id']}}">
+							{% for item in itens %}
+							<option value="{{item['item_id']}}" {% if item['item'] == plano_diario['Item']: %} selected {% endif %}>{{item['item']}}</option>
+							{% endfor %}
+						</select>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<input
+							type="number"
+							class="text-blue-950 bg-white py-1 px-1 border border-blue-600 rounded hover:text-blue-900 hover:bg-blue-50 focus:text-black focus:bg-slate-100 w-full"
+							id="Quantidade_{{plano_diario['id']}}"
+							name="Quantidade_{{plano_diario['id']}}"
+							value="{{plano_diario['Quantidade']}}"
+						/>
+					</td>
+					<td class="py-1 px-2 text-center">
+						<select name="Unidade_{{plano_diario['id']}}" class="w-52 py-1 px-1 border border-blue-600 bg-white rounded-sm hover:text-blue-900 hover:bg-blue-50" id="Unidade_{{plano_diario['id']}}">
+							{% for unidade in unidades %}
+							<option value="{{unidade['unidade_id']}}" {% if unidade['unidade'] == plano_diario['Unidade']: %} selected {% endif %}>{{unidade['unidade']}}</option>
+							{% endfor %}
+						</select>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+	<h3 class="text-white bg-blue-950 text-sm m-2 mt-0 mr-0 pl-3 pt-1 pb-1 border rounded-2xl">
+		{% if mensagem %}
+		{{ mensagem }}
+		{% else %}
+		Plano Diário
+		{% endif %}
+	</h3>
+</form>
+
+{% endblock %}

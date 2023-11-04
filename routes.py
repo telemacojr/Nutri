@@ -8,7 +8,6 @@ Arquivo principal do aplicativo "Nutri". Contém as rotas das páginas.
 
 # Importações
 from flask                   import Flask, request, render_template
-from werkzeug.datastructures import MultiDict
 from utils.misc              import obter_configuracoes, calcula_segunda_feira, soma_dia_data
 from utils.combos            import Combos
 from utils.tabelas           import Tabelas
@@ -58,13 +57,12 @@ def pagina_dos_pacientes():
     if request.method == "POST":
         # Obtêm os dados em dicionários com e sem o botão que os enviou
         formulario      = request.form.to_dict()
-        botoes          = MultiDict(request.form)
 
         # Obtêm o id do paciente selecionado
         id_paciente_selecionado = int(formulario["ComboPaciente"])
 
         # Formulário
-        if "Pesquisar" in botoes:
+        if "Pesquisar" in formulario:
             return render_template(
                 "Paciente.html",
                 pacientes           = tabelas.montar_tabela_de_pacientes(id_paciente_selecionado),
@@ -107,36 +105,42 @@ def pagina_dos_itens():
 
         # Obtêm os dados em dicionários com e sem o botão que os enviou
         formulario = request.form.to_dict()
-        botoes = MultiDict(request.form)
 
         # Obtêm o item selecionado
         item_selecionado = int(formulario["ComboItem"])
         # crud.ler_formulario(formulario)
 
         # Redirecionamentos dos botões
-        if "Pesquisar" in botoes:
+        if "Pesquisar" in formulario:
             return render_template(
                 "Item.html",
                 combo_itens = combos.montar_combo_dos_itens(item_selecionado),
                 itens       = tabelas.montar_tabela_de_itens(item_selecionado, False)
             )
-        elif "Incluir" in botoes:
+        elif "Incluir" in formulario:
             return render_template(
                 "Item.html",
                 combo_itens = combos.montar_combo_dos_itens(0),
                 itens       = tabelas.montar_tabela_de_itens(0, True)
             )
-        elif "Salvar" in botoes:
+        elif "Salvar" in formulario:
             # Se estiver incluindo um item novo
             if "CheckboxSeleciona_0" in formulario:
                 if formulario["Item_0"]:
                     crud.incluir_item(formulario["Item_0"])
+
+                    return render_template(
+                        "Item.html",
+                        combo_itens = combos.montar_combo_dos_itens(0),
+                        itens       = tabelas.montar_tabela_de_itens(0, False),
+                        mensagem    = "Item incluído com sucesso!"
+                    )
                 else:
                     return render_template(
                         "Item.html",
                         combo_itens = combos.montar_combo_dos_itens(0),
                         itens       = tabelas.montar_tabela_de_itens(0, True),
-                        erro        = "Digite um nome para o item."
+                        mensagem    = "Erro: digite um nome para o item."
                     )
             # Atualizando item
             else:
@@ -148,15 +152,16 @@ def pagina_dos_itens():
                             "Item.html",
                             combo_itens = combos.montar_combo_dos_itens(item_id),
                             itens       = tabelas.montar_tabela_de_itens(item_id, False),
+                            mensagem    = "Item atualizado com sucesso!"
                         )
 
                 return render_template(
                     "Item.html",
                     combo_itens = combos.montar_combo_dos_itens(item_id),
                     itens       = tabelas.montar_tabela_de_itens(item_id, False),
-                    erro        = "Marque qual item vai atualizar."
+                    mensagem    = "Erro: marque qual item vai atualizar."
                 )
-        elif "Excluir" in botoes:
+        elif "Excluir" in formulario:
             for key in formulario.keys():
                 if key.startswith("CheckboxSeleciona_"):
                     crud.excluir_item(key.split("_")[1])
@@ -165,13 +170,14 @@ def pagina_dos_itens():
                         "Item.html",
                         combo_itens = combos.montar_combo_dos_itens(item_id),
                         itens       = tabelas.montar_tabela_de_itens(item_id, False),
+                        mensagem    = "Item excluído com sucesso!"
                     )
 
             return render_template(
                 "Item.html",
                 combo_itens = combos.montar_combo_dos_itens(item_id),
                 itens       = tabelas.montar_tabela_de_itens(item_id, False),
-                erro        = "Marque qual item vai excluir."
+                mensagem    = "Erro: marque qual item vai excluir."
             )
         # elif "ExportarExcel" in botoes:
             # Código a adicionar
@@ -203,13 +209,12 @@ def pagina_das_consultas():
 
         # Obtêm os inputs como dicionários com e sem o botão que os enviou
         formulario  = request.form.to_dict()
-        botoes      = MultiDict(request.form)
 
         # Obtêm o paciente selecionado
         id_paciente_selecionado = int(formulario["ComboPaciente"])
 
         # Redirecionamentos dos botões
-        if "Pesquisar" in botoes:
+        if "Pesquisar" in formulario:
             return render_template(
                 "Consultas.html",
                 consultas       = tabelas.montar_tabela_de_consultas(id_paciente_selecionado),
@@ -269,9 +274,8 @@ def pagina_do_plano_diario():
         filtro_data_inicial = formulario['FiltroDataInicial']
         filtro_data_final   = formulario['FiltroDataFinal']
         filtro_dia          = formulario['FiltroDia']
-        botoes              = MultiDict(request.form)
 
-        if 'Pesquisar' in botoes:
+        if 'Pesquisar' in formulario:
             data_inicial_string_Ymd = filtro_data_inicial
             data_final_string_Ymd   = filtro_data_final
             data_dia_string_dmY     = filtro_dia[0:10]
